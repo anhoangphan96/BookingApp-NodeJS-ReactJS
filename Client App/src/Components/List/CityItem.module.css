@@ -1,0 +1,20 @@
+/* Cấu hình style cho các city item */
+.cityItem {
+  border-radius: 16px;
+  width: 33%;
+  height: 320px;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  padding: 24px;
+  justify-content: end;
+}
+.cityName {
+  font-weight: 700;
+  font-size: 32px;
+}
+.cityText {
+  font-weight: 700;
+  font-size: 24px;
+}

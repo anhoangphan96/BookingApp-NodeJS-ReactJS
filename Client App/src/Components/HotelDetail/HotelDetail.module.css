@@ -1,0 +1,94 @@
+/* cấu hình Style cho các thành phần và section có trong trang hotel details */
+.hotelDetail {
+  max-width: 1200px;
+  margin: 24px auto;
+}
+.detailandreservebtn {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.detailandreservebtn button {
+  padding: 12px 18px;
+  border: none;
+  background-color: #1864ab;
+  color: white;
+  font-weight: 700;
+  border-radius: 6px;
+}
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.detail h3 {
+  font-size: 24px;
+}
+.location {
+  font-family: sans-serif, "FontAwesome";
+}
+.location i {
+  margin-right: 8px;
+}
+.distance {
+  color: #2c78bf;
+}
+.price {
+  color: #2f9e44;
+}
+/* xây dựng hiển thị phần hình ảnh trong trang detail */
+.pictures {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  padding: 16px 0px;
+}
+.pictures img {
+  width: 100%;
+  object-fit: cover;
+}
+/*Xây dựng hiển thị phần mô tả và deal tốt cho khách sạn */
+.descriptionanddeal {
+  display: flex;
+  padding: 24px 0px;
+  line-height: 1.4;
+  gap: 24px;
+}
+
+.description {
+  width: 72%;
+}
+.description h3 {
+  font-size: 24px;
+  padding-bottom: 24px;
+}
+.deal {
+  width: 28%;
+  border: 1px solid transparent;
+  background-color: #dfeaf9;
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.deal h4 {
+  font-size: 18px;
+  color: #505253;
+}
+
+.nine_night_price {
+  font-size: 28px;
+  font-weight: 300;
+}
+.nine_night_price span {
+  font-weight: bold;
+}
+.deal button {
+  padding: 12px;
+  border: none;
+  background-color: #1864ab;
+  color: white;
+  font-weight: 700;
+  border-radius: 6px;
+}

@@ -1,0 +1,8 @@
+.searchPage {
+  max-width: 1200px;
+  display: flex;
+  justify-content: center;
+  margin: 24px auto;
+  gap: 24px;
+  align-items: flex-start;
+}

@@ -1,0 +1,26 @@
+/* Cấu hình style cho các Hotel Type item */
+
+.hotelTypeItem {
+  display: flex;
+  flex-direction: column;
+  color: black;
+  align-items: stretch;
+  width: 20%;
+}
+.hotelTypeItem img {
+  width: 100%;
+  max-height: 160px;
+  height: 100%;
+  object-fit: cover;
+  border-top-right-radius: 16px;
+  border-top-left-radius: 16px;
+}
+.hotelTypeName {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.hotelTypeCount {
+  font-size: 18px;
+  color: #868e96;
+}

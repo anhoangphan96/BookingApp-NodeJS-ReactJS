@@ -1,0 +1,29 @@
+/* Cấu hình style cho section Subscribe */
+.container {
+  background-color: #133c89;
+  color: white;
+}
+.subscribe {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 52px;
+}
+
+.subscribe h2 {
+  font-size: 32px;
+}
+.subscribe input {
+  border: 1px solid transparent;
+  padding: 16px 12px;
+  border-radius: 4px;
+  margin-right: 12px;
+}
+.subscribe button {
+  padding: 16px 8px;
+  color: white;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background-color: #1864ab;
+}

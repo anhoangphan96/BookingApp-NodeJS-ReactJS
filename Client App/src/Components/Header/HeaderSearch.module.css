@@ -1,0 +1,46 @@
+/* Chọn style cho thanh searchBar để giống yêu cầu đề bài */
+.searchBar {
+  width: 100%;
+  position: absolute;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 64px;
+  grid-template-rows: 1fr;
+  border: 3px solid #fab005;
+  padding: 6px 38px;
+  background: #fff;
+  border-radius: 8px;
+  align-items: center;
+
+  bottom: -10%;
+}
+.inputcontainer {
+  position: relative;
+}
+.searchBar input {
+  font-family: sans-serif, "FontAwesome";
+  font-size: 18px;
+  border: none;
+  padding: 4px 36px;
+}
+
+.searchBar i {
+  font-size: 20px;
+  top: 3px;
+  position: absolute;
+  color: #c2c2c2;
+  right: 323px;
+}
+/* Khi người dùng input vào thì icon sẽ chuyển sang màu đen */
+.iconActive {
+  color: black !important;
+}
+/* Chọn màu cho placeholder để đồng bộ cho toàn page */
+.searchBar input::placeholder {
+  color: #c2c2c2;
+}
+.btnSearch {
+  color: white;
+  padding: 16px 0px;
+  border: none;
+  background-color: #1864ab;
+}

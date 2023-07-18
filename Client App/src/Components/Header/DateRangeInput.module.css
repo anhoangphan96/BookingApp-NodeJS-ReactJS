@@ -1,0 +1,18 @@
+/* Chỉnh các phần vị trí của các phần tử trong date range section */
+.dateRange {
+  position: relative;
+}
+
+.calendar {
+  position: absolute;
+}
+.calendar i {
+  position: static;
+}
+.calendar input {
+  padding: 4px;
+}
+/* Khi người dùng input vào thì icon sẽ chuyển sang màu đen */
+.iconActive {
+  color: black !important;
+}

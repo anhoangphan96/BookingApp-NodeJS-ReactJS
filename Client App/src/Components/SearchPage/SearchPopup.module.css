@@ -1,0 +1,53 @@
+/* Cấu hình các style cho các phần tử và section trong Search Popup */
+.searchPopup {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background-color: #fbc115;
+  padding: 12px;
+}
+.searchPopup h2 {
+  color: #686a6c;
+  margin-bottom: 12px;
+}
+.searchPopup form {
+  display: flex;
+  gap: 12px;
+  flex-direction: column;
+}
+.searchPopup input {
+  font-size: 18px;
+  padding: 12px 4px;
+  font-weight: 500;
+  width: 100%;
+}
+.searchPopup i {
+  display: none;
+}
+.search {
+  padding: 12px 4px;
+  color: white;
+  border: none;
+  background-color: #1c7ed6;
+  font-size: 18px;
+}
+.options {
+  color: #686a6c;
+  display: flex;
+  gap: 12px;
+  flex-direction: column;
+  padding-left: 12px;
+}
+.options input {
+  padding: 2px;
+  width: 60px;
+}
+.options div {
+  display: flex;
+  justify-content: space-between;
+}
+.options span {
+  font-size: 13px;
+}

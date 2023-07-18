@@ -1,0 +1,10 @@
+/* Cấu hình các style cho các phần tử có trong navbaritem */
+.navbar__item.active {
+  padding: 8px;
+  border: 1px solid #fff;
+  border-radius: 18px;
+}
+.navbar__item span {
+  cursor: pointer;
+  margin-left: 8px;
+}

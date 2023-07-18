@@ -1,0 +1,12 @@
+/* Cấu hình style cho từng column và thẻ a trong từng column */
+.column {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.column a {
+  font-size: 85%;
+  color: #18479e;
+  text-decoration: none;
+}

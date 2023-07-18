@@ -1,0 +1,23 @@
+/* lựa chọn các style cho các section trong Header */
+.container {
+  background-color: #133c89;
+}
+.header {
+  margin: 0px auto;
+  max-width: 1200px;
+  color: white;
+  padding: 24px 0px 122px 0px;
+  position: relative;
+}
+.header h1 {
+  margin: 24px 0px;
+}
+.header p {
+  margin-bottom: 24px;
+}
+.btnSignin {
+  color: white;
+  border: 0px solid transparent;
+  background-color: #1c7ed6;
+  padding: 10px;
+}

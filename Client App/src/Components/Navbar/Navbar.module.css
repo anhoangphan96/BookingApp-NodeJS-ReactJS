@@ -1,0 +1,46 @@
+/* Cấu hình các style cho các phần tử có trong navbar */
+.container {
+  background-color: #133c89;
+}
+.navbar {
+  margin: 0px auto;
+  max-width: 1200px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+
+  gap: 16px;
+}
+.navbar__intro {
+  width: 100%;
+  padding: 16px 0px;
+  display: flex;
+  justify-content: space-between;
+}
+.navbar__intro > a {
+  color: white;
+  text-decoration: none;
+}
+.navbar__intro > a:hover {
+  transform: scale(1.1);
+}
+.navbar__button {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.navbar__button button {
+  color: #133c89;
+  padding: 4px 8px;
+}
+.navbar__pages {
+  width: 100%;
+  padding: 16px 0px;
+}
+.navbar__pages ul {
+  padding: 0px;
+  display: flex;
+  gap: 32px;
+  list-style: none;
+  align-items: center;
+}

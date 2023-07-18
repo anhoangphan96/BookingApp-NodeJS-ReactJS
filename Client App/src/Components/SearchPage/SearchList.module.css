@@ -1,0 +1,7 @@
+/* Cấu hình style cho Search List */
+.searchList {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 75%;
+}
