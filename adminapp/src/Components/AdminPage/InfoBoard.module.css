@@ -1,0 +1,44 @@
+.infoBoardContainer {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.inforType {
+  display: flex;
+  flex-direction: column;
+}
+.inforType h3 {
+  font-weight: 500;
+  color: #868e96;
+  font-size: 12px;
+  margin: 0px;
+}
+.inforType h4 {
+  font-weight: 400;
+  margin: 16px 0px;
+  font-size: 24px;
+}
+.inforType svg {
+  align-self: flex-end;
+  border: 1px transparent;
+  padding: 4px;
+  border-radius: 4px;
+}
+.iconuser {
+  background-color: #ffc9c9;
+  color: #c92a2a;
+}
+.iconorder {
+  background-color: #fff3bf;
+  color: #fab005;
+}
+.iconearning {
+  background-color: #b2f2bb;
+  color: #2f9e44;
+}
+.iconbalance {
+  background-color: #eebefa;
+  color: #9c36b5;
+}

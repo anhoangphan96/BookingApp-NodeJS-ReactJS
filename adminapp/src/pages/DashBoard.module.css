@@ -1,0 +1,13 @@
+.dashboardContainer {
+  display: flex;
+  max-width: 1400px;
+  margin: 0px auto;
+  height: 100vh;
+}
+.infoAndTracs {
+  width: 85%;
+  height: 100%;
+  margin-top: 59.5px;
+  border-top: 1px solid #adb5bd;
+  padding: 16px;
+}

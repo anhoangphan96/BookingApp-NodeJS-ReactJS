@@ -1,0 +1,32 @@
+.sidebarContainer {
+  width: 15%;
+  border-right: 1px solid #adb5bd;
+  height: 100%;
+}
+
+.sidebarContainer > h2 {
+  text-align: center;
+  color: #7950f2;
+  padding-bottom: 16px;
+  font-size: 20px;
+  border-bottom: 1px solid #adb5bd;
+}
+.sidebarContainer > ul {
+  margin-bottom: 20px;
+  padding-left: 16px;
+}
+.sidebarContainer > ul > h4 {
+  font-size: 10px;
+  font-weight: 400;
+}
+.sidebarContainer > ul > li {
+  display: flex;
+  align-items: flex-start;
+  font-size: 12px;
+  gap: 10px;
+  margin: 8px 0px;
+  padding-left: 8px;
+}
+.sidebarContainer > ul > li > svg {
+  color: #7950f2;
+}

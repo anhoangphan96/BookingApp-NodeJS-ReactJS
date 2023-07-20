@@ -4,9 +4,10 @@ import Detail from "./pages/detail/Detail";
 import Search from "./pages/search/Search";
 import User from "./pages/user/User";
 import { useEffect } from "react";
-import { Provider, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loginActions } from "./store/store";
 import Transaction from "./pages/transaction/Transaction";
+
 function App() {
   const dispatch = useDispatch();
   //Nhớ làm cái catch error
