@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styles from "./HotelDetail.module.css";
 import { useParams } from "react-router-dom";
+import ReserBookNow from "./ReserBookNow";
 const HotelDetail = function () {
   const [hotelDetail, setHotelDetail] = useState(null);
+  const [isOpenBookNow, setIsOpenBookNow] = useState(false);
   const params = useParams();
   const idHotel = params.id;
   const getHotelDetail = async () => {
@@ -15,6 +17,10 @@ const HotelDetail = function () {
     getHotelDetail();
   }, []);
 
+  const bookNowHandler = () => {
+    setIsOpenBookNow((prev) => !prev);
+  };
+  console.log(isOpenBookNow);
   // Trả ra JSX code hiển thị phần hotel Details
   return (
     hotelDetail && (
@@ -50,9 +56,10 @@ const HotelDetail = function () {
               <span>${hotelDetail.cheapestPrice} </span>
               (1 nights)
             </span>
-            <button>Reserve or Book Now!</button>
+            <button onClick={bookNowHandler}>Reserve or Book Now!</button>
           </div>
         </div>
+        {isOpenBookNow && <ReserBookNow />}
       </div>
     )
   );

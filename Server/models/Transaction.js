@@ -12,15 +12,15 @@ const transactionSchema = new Schema({
     ref: "Hotel",
   },
   room: {
-    type: String,
+    type: [Number],
     required: true,
   },
   dateStart: {
-    type: Date,
+    type: String,
     required: true,
   },
   dateEnd: {
-    type: Date,
+    type: String,
     required: true,
   },
   price: {
@@ -28,7 +28,7 @@ const transactionSchema = new Schema({
     required: true,
   },
   payment: {
-    type: Number,
+    type: String,
     required: true,
   },
   status: {

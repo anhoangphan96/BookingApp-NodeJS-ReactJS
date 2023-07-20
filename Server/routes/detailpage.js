@@ -4,4 +4,5 @@ const router = express.Router();
 const detailController = require("../controllers/detailpage");
 
 router.get("/:id", detailController.getDetailData);
+router.get("/:id/rooms/available", detailController.getRoomAvailable);
 module.exports = router;

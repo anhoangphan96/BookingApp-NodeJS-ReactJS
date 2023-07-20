@@ -40,9 +40,35 @@ const searchSlice = createSlice({
   },
 });
 
+//initialState and slice cho phần tính giá trong detail hotel khi chọn rooms
+
+const initialStateListRoom = {
+  roomsSelected: [],
+  totalPrice: 0,
+};
+const listRoomSlice = createSlice({
+  name: "listRoom",
+  initialState: initialStateListRoom,
+  reducers: {
+    addRoom: (state, action) => {
+      state.roomsSelected.push(action.payload.room);
+      state.totalPrice += action.payload.price;
+    },
+    removeRoom: (state, action) => {
+      state.roomsSelected.filter((room) => action.payload.room !== room);
+      state.totalPrice -= action.payload.price;
+    },
+  },
+});
+
 const store = configureStore({
-  reducer: { login: loginSlice.reducer, search: searchSlice.reducer },
+  reducer: {
+    login: loginSlice.reducer,
+    search: searchSlice.reducer,
+    roomList: listRoomSlice.reducer,
+  },
 });
 export const loginActions = loginSlice.actions;
 export const searchActions = searchSlice.actions;
+export const roomListActions = listRoomSlice.actions;
 export default store;

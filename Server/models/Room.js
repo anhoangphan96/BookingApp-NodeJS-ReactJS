@@ -19,7 +19,7 @@ const roomSchema = new Schema({
     required: true,
   },
   roomNumbers: {
-    type: Number,
+    type: [Number],
     required: true,
   },
 });

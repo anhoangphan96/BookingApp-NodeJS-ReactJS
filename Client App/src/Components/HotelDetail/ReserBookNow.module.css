@@ -1,0 +1,29 @@
+.formBook {
+  width: 100%;
+}
+
+.dateandinfor {
+  display: flex;
+  gap: 64px;
+  width: 100%;
+}
+.infor {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+.infor > input {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 8px;
+  border: 1px solid #868e96;
+  border-radius: 4px;
+}
+.listRoom {
+  display: flex;
+  gap: 24px;
+}
+.inforContainer {
+  display: flex;
+}
