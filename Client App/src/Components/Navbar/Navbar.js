@@ -84,7 +84,7 @@ const Navbar = (props) => {
             {isLoggedIn && (
               <>
                 <span>{username}</span>
-                <Link to="#">
+                <Link to="/transaction">
                   <button>Transactions</button>
                 </Link>
                 <Link to="/user?mode=login">

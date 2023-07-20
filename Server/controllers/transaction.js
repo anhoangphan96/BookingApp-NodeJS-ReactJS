@@ -20,3 +20,10 @@ exports.postReserve = (req, res, next) => {
     .status(200)
     .json({ message: "Transaction has been created successfully" });
 };
+
+exports.getReserve = (req, res, next) => {
+  const username = req.session.username;
+  Transaction.find({ user: username })
+    .populate("hotel", "name")
+    .then((result) => res.status(200).json(result));
+};

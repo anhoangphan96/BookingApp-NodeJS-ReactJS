@@ -6,6 +6,7 @@ import User from "./pages/user/User";
 import { useEffect } from "react";
 import { Provider, useDispatch } from "react-redux";
 import { loginActions } from "./store/store";
+import Transaction from "./pages/transaction/Transaction";
 function App() {
   const dispatch = useDispatch();
   //Nhớ làm cái catch error
@@ -32,6 +33,7 @@ function App() {
     { path: "/search", element: <Search></Search> },
     { path: "/detail/:id", element: <Detail></Detail> },
     { path: "/user", element: <User></User> },
+    { path: "/transaction", element: <Transaction></Transaction> },
   ]);
   return <RouterProvider router={router}></RouterProvider>;
 }
