@@ -14,7 +14,7 @@ const SideBar = () => {
             width={18}
             height={18}
             viewBox="0 0 24 24"
-            stroke-width={2}
+            strokeWidth={2}
             stroke="currentColor"
             fill="none"
           >
@@ -36,7 +36,7 @@ const SideBar = () => {
             width={18}
             height={18}
             viewBox="0 0 24 24"
-            stroke-width={2}
+            strokeWidth={2}
             stroke="currentColor"
             fill="none"
           >
@@ -53,7 +53,7 @@ const SideBar = () => {
             width={18}
             height={18}
             viewBox="0 0 24 24"
-            stroke-width={2}
+            strokeWidth={2}
             stroke="currentColor"
             fill="none"
           >
@@ -75,7 +75,7 @@ const SideBar = () => {
             width={18}
             height={18}
             viewBox="0 0 24 24"
-            stroke-width={2}
+            strokeWidth={2}
             stroke="currentColor"
             fill="none"
           >
@@ -93,7 +93,7 @@ const SideBar = () => {
             width={18}
             height={18}
             viewBox="0 0 24 24"
-            stroke-width={2}
+            strokeWidth={2}
             stroke="currentColor"
             fill="none"
           >
@@ -114,7 +114,7 @@ const SideBar = () => {
             width={18}
             height={18}
             viewBox="0 0 24 24"
-            stroke-width={2}
+            strokeWidth={2}
             stroke="currentColor"
             fill="none"
           >
@@ -127,7 +127,7 @@ const SideBar = () => {
             <path d="M9 15l0 .01"></path>
             <path d="M9 18l0 .01"></path>
           </svg>
-          <Link>New Hotel</Link>
+          <Link to="/hotel/addhotel">New Hotel</Link>
         </li>
         <li>
           <svg
@@ -136,7 +136,7 @@ const SideBar = () => {
             width={18}
             height={18}
             viewBox="0 0 24 24"
-            stroke-width={2}
+            strokeWidth={2}
             stroke="currentColor"
             fill="none"
           >
@@ -145,7 +145,7 @@ const SideBar = () => {
             <path d="M3 21h18"></path>
             <path d="M6 21v-16a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v16"></path>
           </svg>
-          <Link>New Room</Link>
+          <Link to="/room/addroom">New Room</Link>
         </li>
       </ul>
       <ul>
@@ -157,7 +157,7 @@ const SideBar = () => {
             width={18}
             height={18}
             viewBox="0 0 24 24"
-            stroke-width={2}
+            strokeWidth={2}
             stroke="currentColor"
             fill="none"
           >

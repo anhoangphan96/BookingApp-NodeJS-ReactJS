@@ -12,7 +12,7 @@ const InfoBoard = () => {
           width={18}
           height={18}
           viewBox="0 0 24 24"
-          stroke-width={2}
+          strokeWidth={2}
           stroke="currentColor"
           fill="none"
         >
@@ -30,7 +30,7 @@ const InfoBoard = () => {
           width={18}
           height={18}
           viewBox="0 0 24 24"
-          stroke-width={2}
+          strokeWidth={2}
           stroke="currentColor"
           fill="none"
         >
@@ -50,7 +50,7 @@ const InfoBoard = () => {
           width={18}
           height={18}
           viewBox="0 0 24 24"
-          stroke-width={2}
+          strokeWidth={2}
           stroke="currentColor"
           fill="none"
         >
@@ -69,7 +69,7 @@ const InfoBoard = () => {
           width={18}
           height={18}
           viewBox="0 0 24 24"
-          stroke-width={2}
+          strokeWidth={2}
           stroke="currentColor"
           fill="none"
         >

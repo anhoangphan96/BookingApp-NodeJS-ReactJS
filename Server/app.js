@@ -10,6 +10,7 @@ const homepageRoute = require("./routes/homepage");
 const detailRoute = require("./routes/detailpage");
 const transactionRoute = require("./routes/transaction");
 const hoteladminRoute = require("./routes/hoteladmin");
+const roomadminRoute = require("./routes/room");
 app.use(
   cors({
     origin: ["http://localhost:3000", "http://localhost:3001"],
@@ -32,6 +33,7 @@ app.use("/home", homepageRoute);
 app.use("/detail", detailRoute);
 app.use("/transaction", transactionRoute);
 app.use("/hotel", hoteladminRoute);
+app.use("/room", roomadminRoute);
 mongoose
   .connect(
     "mongodb+srv://anphfx21936:Hoangan512@cluster0.fabhbp4.mongodb.net/bookingApp"

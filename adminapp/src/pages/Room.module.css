@@ -1,0 +1,9 @@
+.title h3 {
+  margin: 8px 0px 16px 0px;
+  font-weight: 400;
+  color: #868e96;
+}
+.title {
+  display: flex;
+  justify-content: space-between;
+}

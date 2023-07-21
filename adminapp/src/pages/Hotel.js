@@ -15,14 +15,14 @@ const Hotel = () => {
   useEffect(() => {
     getListHotel();
   });
-  const addnewHandler = () => {
+  const addnewHotelHandler = () => {
     navigate("/hotel/addhotel");
   };
   return (
     <div className={styles.hotelListContainer}>
       <div className={styles.title}>
         <h3>Hotels List</h3>
-        <button onClick={addnewHandler}>Add New</button>
+        <button onClick={addnewHotelHandler}>Add New</button>
       </div>
       <table>
         <tbody>
@@ -37,7 +37,7 @@ const Hotel = () => {
             <th>City</th>
             <th>Action</th>
           </tr>
-          {setListHotel.length > 0 &&
+          {listHotel.length > 0 &&
             listHotel.map((hotel) => (
               <HotelItem key={hotel._id} hotel={hotel} />
             ))}
