@@ -10,6 +10,7 @@ const RoomItem = (props) => {
       <td>{props.room.price}</td>
       <td>{props.room.maxPeople}</td>
       <td>
+        <button>Edit</button>
         <button>Delete</button>
       </td>
     </tr>

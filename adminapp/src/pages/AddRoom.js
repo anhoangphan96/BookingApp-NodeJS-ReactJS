@@ -6,8 +6,8 @@ const AddRoom = () => {
   const navigate = useNavigate();
   const [titleInput, setTitleInput] = useState("");
   const [descInput, setDescInput] = useState("");
-  const [priceInput, setPriceInput] = useState();
-  const [maxpeopleInput, setMaxpeopleInput] = useState();
+  const [priceInput, setPriceInput] = useState("");
+  const [maxpeopleInput, setMaxpeopleInput] = useState("");
   const [roomInput, setRoomInput] = useState("");
   const [hotelInput, setHotelInput] = useState("");
   const [listHotel, setListHotel] = useState([]);
@@ -39,9 +39,9 @@ const AddRoom = () => {
       body: JSON.stringify({
         title: titleInput,
         desc: descInput,
-        price: priceInput,
-        maxPeople: maxpeopleInput,
-        room: roomInput.split("\n"),
+        price: Number(priceInput),
+        maxPeople: Number(maxpeopleInput),
+        room: roomInput.split(",").map((room) => Number(room)), // nhận và chuyển đổi các room thành array number of room
         hotel: hotelInput, //Mặc dù để tên hotel nhưng truyền value hotelId vào backend
       }),
     });

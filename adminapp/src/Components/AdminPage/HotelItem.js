@@ -10,6 +10,7 @@ const HotelItem = (props) => {
       <td>{props.hotel.title}</td>
       <td>{props.hotel.city}</td>
       <td>
+        <button>Edit</button>
         <button>Delete</button>
       </td>
     </tr>

@@ -2,12 +2,18 @@ import { useEffect, useState } from "react";
 import Card from "../CardContainer/Card";
 import styles from "./TransactionAdmin.module.css";
 import TransactionItem from "./TransactionItem";
+import { useLocation } from "react-router-dom";
 
 const TransactionAdmin = () => {
+  const urlLocation = useLocation().pathname;
+  console.log(urlLocation);
   const [listTrans, setListTrans] = useState([]);
   const getDataTransactionAdmin = async () => {
+    //Nếu như ở dashboard sẽ gọi đến api rout transaction adminlast8 (lấy 8 giao dịch mới nhất) còn không thì sẽ lấy full giao dịch
     const response = await fetch(
-      `http://localhost:5000/transaction/transadmin`
+      `http://localhost:5000/transaction/transadmin${
+        urlLocation === "/" ? "last8" : ""
+      }`
     );
     const data = await response.json();
     setListTrans(data);
@@ -17,8 +23,8 @@ const TransactionAdmin = () => {
   }, []);
   console.log(listTrans);
   return (
-    <Card className={styles.transactionTable}>
-      <h3>Latest Transactions</h3>
+    <>
+      {urlLocation === "/" && <h3>Latest Transactions</h3>}
       <table className={styles.tabledata}>
         <tbody>
           <tr>
@@ -40,7 +46,7 @@ const TransactionAdmin = () => {
             ))}
         </tbody>
       </table>
-    </Card>
+    </>
   );
 };
 export default TransactionAdmin;

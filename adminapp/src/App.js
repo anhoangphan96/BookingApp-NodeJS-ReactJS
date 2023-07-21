@@ -5,6 +5,7 @@ import Hotel from "./pages/Hotel";
 import AddHotel from "./pages/AddHotel";
 import Room from "./pages/Room";
 import AddRoom from "./pages/AddRoom";
+import Transaction from "./pages/Transaction";
 function App() {
   const router = createBrowserRouter([
     {
@@ -19,6 +20,7 @@ function App() {
         { path: "/hotel/addhotel", element: <AddHotel></AddHotel> },
         { path: "/room", element: <Room></Room> },
         { path: "/room/addroom", element: <AddRoom></AddRoom> },
+        { path: "/transaction", element: <Transaction></Transaction> },
       ],
     },
   ]);

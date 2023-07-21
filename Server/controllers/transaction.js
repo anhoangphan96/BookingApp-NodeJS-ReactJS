@@ -28,7 +28,13 @@ exports.getReserve = (req, res, next) => {
     .then((result) => res.status(200).json(result));
 };
 
-exports.getTransAdmin = (req, res, next) => {
+exports.getTransAdminLastest8 = (req, res, next) => {
+  Transaction.find()
+    .limit(8)
+    .populate("hotel", "name")
+    .then((result) => res.status(200).json(result));
+};
+exports.getTransAdminAll = (req, res, next) => {
   Transaction.find()
     .limit(8)
     .populate("hotel", "name")

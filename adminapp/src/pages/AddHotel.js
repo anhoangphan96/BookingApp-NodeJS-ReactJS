@@ -8,10 +8,10 @@ const AddHotel = () => {
   const [typeInput, setTypeInput] = useState("");
   const [cityInput, setCityInput] = useState("");
   const [addressInput, setAddressInput] = useState("");
-  const [distanceInput, setDistanceInput] = useState();
+  const [distanceInput, setDistanceInput] = useState("");
   const [titleInput, setTitleInput] = useState("");
   const [descInput, setDescInput] = useState("");
-  const [priceInput, setPriceInput] = useState();
+  const [priceInput, setPriceInput] = useState("");
   const [pictureInput, setPictureInput] = useState("");
   const [featuredInput, setFeaturedInput] = useState("");
   const [roomInput, setRoomInput] = useState("");
@@ -64,7 +64,7 @@ const AddHotel = () => {
         distance: distanceInput,
         title: titleInput,
         desc: descInput,
-        price: priceInput,
+        price: Number(priceInput),
         picture: pictureInput.split("\n"),
         featured: featuredInput === "true", // set giá trị input từ user thành boolean
         room: roomInput.split("\n"),
