@@ -27,3 +27,10 @@ exports.getReserve = (req, res, next) => {
     .populate("hotel", "name")
     .then((result) => res.status(200).json(result));
 };
+
+exports.getTransAdmin = (req, res, next) => {
+  Transaction.find()
+    .limit(8)
+    .populate("hotel", "name")
+    .then((result) => res.status(200).json(result));
+};

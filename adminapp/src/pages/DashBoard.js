@@ -4,13 +4,10 @@ import TransactionAdmin from "../Components/AdminPage/TransactionAdmin";
 import styles from "./DashBoard.module.css";
 const DashBoard = () => {
   return (
-    <div className={styles.dashboardContainer}>
-      <SideBar />
-      <div className={styles.infoAndTracs}>
-        <InfoBoard />
-        <TransactionAdmin />
-      </div>
-    </div>
+    <>
+      <InfoBoard />
+      <TransactionAdmin />
+    </>
   );
 };
 export default DashBoard;

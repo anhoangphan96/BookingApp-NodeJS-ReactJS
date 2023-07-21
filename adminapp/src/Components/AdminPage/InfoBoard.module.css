@@ -8,6 +8,7 @@
 .inforType {
   display: flex;
   flex-direction: column;
+  padding: 8px;
 }
 .inforType h3 {
   font-weight: 500;
@@ -35,7 +36,7 @@
   color: #fab005;
 }
 .iconearning {
-  background-color: #b2f2bb;
+  background-color: #d3f9d8;
   color: #2f9e44;
 }
 .iconbalance {

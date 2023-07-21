@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styles from "./SideBar.module.css";
 
 const SideBar = () => {
@@ -23,7 +24,7 @@ const SideBar = () => {
             <path d="M14 12h6v8h-6z"></path>
             <path d="M14 4h6v4h-6z"></path>
           </svg>
-          DashBoard
+          <Link to="/">DashBoard</Link>
         </li>
       </ul>
       <ul>
@@ -43,7 +44,7 @@ const SideBar = () => {
             <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
             <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
           </svg>
-          Users
+          <Link>Users</Link>
         </li>
         <li>
           <svg
@@ -65,7 +66,7 @@ const SideBar = () => {
             <path d="M9 15l0 .01"></path>
             <path d="M9 18l0 .01"></path>
           </svg>
-          Hotels
+          <Link to="/hotel">Hotels</Link>
         </li>
         <li>
           <svg
@@ -83,7 +84,7 @@ const SideBar = () => {
             <path d="M3 21h18"></path>
             <path d="M6 21v-16a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v16"></path>
           </svg>
-          Rooms
+          <Link to="/room">Rooms</Link>
         </li>
         <li>
           <svg
@@ -101,7 +102,7 @@ const SideBar = () => {
             <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
             <path d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5"></path>
           </svg>
-          Transactions
+          <Link to="/transaction">Transactions</Link>
         </li>
       </ul>
       <ul>
@@ -126,7 +127,7 @@ const SideBar = () => {
             <path d="M9 15l0 .01"></path>
             <path d="M9 18l0 .01"></path>
           </svg>
-          New Hotel
+          <Link>New Hotel</Link>
         </li>
         <li>
           <svg
@@ -144,7 +145,7 @@ const SideBar = () => {
             <path d="M3 21h18"></path>
             <path d="M6 21v-16a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v16"></path>
           </svg>
-          New Room
+          <Link>New Room</Link>
         </li>
       </ul>
       <ul>
@@ -165,7 +166,7 @@ const SideBar = () => {
             <path d="M9 12h12l-3 -3"></path>
             <path d="M18 15l3 -3"></path>
           </svg>
-          Logout
+          <Link>Logout</Link>
         </li>
       </ul>
     </div>

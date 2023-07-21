@@ -1,0 +1,12 @@
+.rootContainer {
+  display: flex;
+  max-width: 1400px;
+  margin: 0px auto;
+  height: 100vh;
+}
+.contentSection {
+  width: 85%;
+  margin-top: 59.5px;
+  border-top: 1px solid #adb5bd;
+  padding: 16px;
+}

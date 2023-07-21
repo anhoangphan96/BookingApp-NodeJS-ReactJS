@@ -17,6 +17,5 @@ exports.getRoomAvailable = (req, res, next) => {
       const rooms = hotel.rooms;
       res.status(200).json(rooms);
     })
-
     .catch((err) => console.log(err));
 };
