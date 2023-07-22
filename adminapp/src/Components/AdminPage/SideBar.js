@@ -127,7 +127,7 @@ const SideBar = () => {
             <path d="M9 15l0 .01"></path>
             <path d="M9 18l0 .01"></path>
           </svg>
-          <Link to="/hotel/addhotel">New Hotel</Link>
+          <Link to="/hotel/formhotel?mode=add">New Hotel</Link>
         </li>
         <li>
           <svg
@@ -145,7 +145,7 @@ const SideBar = () => {
             <path d="M3 21h18"></path>
             <path d="M6 21v-16a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v16"></path>
           </svg>
-          <Link to="/room/addroom">New Room</Link>
+          <Link to="/room/formroom?mode=add">New Room</Link>
         </li>
       </ul>
       <ul>

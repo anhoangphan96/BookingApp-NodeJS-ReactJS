@@ -1,4 +1,10 @@
+import { useNavigate } from "react-router-dom";
+
 const RoomItem = (props) => {
+  const navigate = useNavigate();
+  const updateRoomHandler = () => {
+    navigate(`/room/formroom?mode=update&id=${props.room._id}`);
+  };
   return (
     <tr>
       <td>
@@ -10,7 +16,7 @@ const RoomItem = (props) => {
       <td>{props.room.price}</td>
       <td>{props.room.maxPeople}</td>
       <td>
-        <button>Edit</button>
+        <button onClick={updateRoomHandler}>Edit</button>
         <button>Delete</button>
       </td>
     </tr>

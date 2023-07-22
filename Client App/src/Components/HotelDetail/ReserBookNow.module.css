@@ -21,9 +21,13 @@
   border-radius: 4px;
 }
 .listRoom {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
+
 .inforContainer {
   display: flex;
+  justify-content: space-between;
+  width: 100%;
 }

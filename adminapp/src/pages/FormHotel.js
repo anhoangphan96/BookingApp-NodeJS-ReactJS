@@ -1,8 +1,11 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Card from "../Components/CardContainer/Card";
-import styles from "./AddHotel.module.css";
-import { useState } from "react";
-const AddHotel = () => {
+import styles from "./FormHotel.module.css";
+import { useEffect, useState } from "react";
+const FormHotel = () => {
+  const [searchParams] = useSearchParams();
+  const mode = searchParams.get("mode");
+  const hotelid = searchParams.get("id");
   const navigate = useNavigate();
   const [nameInput, setNameInput] = useState("");
   const [typeInput, setTypeInput] = useState("");
@@ -50,8 +53,39 @@ const AddHotel = () => {
     setRoomInput(event.target.value);
   };
 
-  const sendDataAddHotel = async () => {
-    const response = await fetch(`http://localhost:5000/hotel/addhotel`, {
+  const getHotelUpdateOne = async () => {
+    const response = await fetch(
+      `http://localhost:5000/hotel/updatehotel?id=${hotelid}`
+    );
+    const data = await response.json();
+    setNameInput(data.name);
+    setTypeInput(data.type);
+    setCityInput(data.city);
+    setAddressInput(data.address);
+    setDistanceInput(data.distance);
+    setTitleInput(data.title);
+    setDescInput(data.desc);
+    setPriceInput(data.cheapestPrice);
+    setPictureInput(data.photos.join("\n"));
+    setFeaturedInput(data.featured);
+    setRoomInput(data.rooms.map((room) => room.title).join("\n"));
+  };
+
+  useEffect(() => {
+    if (mode === "update") {
+      getHotelUpdateOne();
+    }
+  }, []);
+
+  const sendDataInputHotel = async () => {
+    let urlToFetch;
+    if (mode === "add") {
+      urlToFetch = `http://localhost:5000/hotel/addhotel`;
+    } else if (mode === "update") {
+      urlToFetch = `http://localhost:5000/hotel/updatehotel?id=${hotelid}`;
+    }
+    console.log(urlToFetch);
+    const response = await fetch(urlToFetch, {
       method: "POST",
       mode: "cors",
       credentials: "include",
@@ -76,7 +110,7 @@ const AddHotel = () => {
   };
   const submitSendAddHotel = (event) => {
     event.preventDefault();
-    sendDataAddHotel();
+    sendDataInputHotel();
   };
 
   return (
@@ -166,7 +200,7 @@ const AddHotel = () => {
               value={priceInput}
             ></input>
           </div>
-          <div className={`${styles.inputfield}`}>
+          <div className={`${styles.inputfield} ${styles.pictureField}`}>
             <label htmlFor="image">Image</label>
             <textarea
               id="image"
@@ -200,4 +234,4 @@ const AddHotel = () => {
     </>
   );
 };
-export default AddHotel;
+export default FormHotel;

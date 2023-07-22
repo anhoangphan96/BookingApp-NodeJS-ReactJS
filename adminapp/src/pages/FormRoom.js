@@ -1,9 +1,13 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Card from "../Components/CardContainer/Card";
-import styles from "./AddRoom.module.css";
+import styles from "./FormRoom.module.css";
 import { useEffect, useState } from "react";
-const AddRoom = () => {
+const FormRoom = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const mode = searchParams.get("mode");
+  const idRoom = searchParams.get("id");
+
   const [titleInput, setTitleInput] = useState("");
   const [descInput, setDescInput] = useState("");
   const [priceInput, setPriceInput] = useState("");
@@ -29,9 +33,32 @@ const AddRoom = () => {
   const hotelChangeHandler = (event) => {
     setHotelInput(event.target.value);
   };
+  const getDataOneRoom = async () => {
+    const response = await fetch(
+      `http://localhost:5000/room/updateroom?id=${idRoom}`
+    );
+    const data = await response.json();
+    console.log(data);
+    setTitleInput(data.title);
+    setDescInput(data.desc);
+    setPriceInput(data.price);
+    setMaxpeopleInput(data.maxPeople);
+    setRoomInput(data.roomNumbers.join(","));
+  };
+  useEffect(() => {
+    if (mode === "update") {
+      getDataOneRoom();
+    }
+  }, []);
+  let urlToFetch;
+  if (mode === "add") {
+    urlToFetch = `http://localhost:5000/room/addroom`;
+  } else if (mode === "update") {
+    urlToFetch = `http://localhost:5000/room/updateroom?id=${idRoom}`;
+  }
 
-  const sendDataAddRoom = async () => {
-    const response = await fetch(`http://localhost:5000/room/addroom`, {
+  const sendDataInputRoom = async () => {
+    const response = await fetch(urlToFetch, {
       method: "POST",
       mode: "cors",
       credentials: "include",
@@ -56,7 +83,7 @@ const AddRoom = () => {
   };
   const submitSendAddRoom = (event) => {
     event.preventDefault();
-    sendDataAddRoom();
+    sendDataInputRoom();
   };
   useEffect(() => {
     getListHotel();
@@ -140,4 +167,4 @@ const AddRoom = () => {
     </>
   );
 };
-export default AddRoom;
+export default FormRoom;

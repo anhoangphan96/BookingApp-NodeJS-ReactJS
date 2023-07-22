@@ -1,4 +1,11 @@
+import { useNavigate } from "react-router-dom";
+
 const HotelItem = (props) => {
+  const navigate = useNavigate();
+  const editHotelHandler = () => {
+    navigate(`/hotel/formhotel?mode=update&id=${props.hotel._id}`);
+  };
+
   return (
     <tr>
       <td>
@@ -10,7 +17,7 @@ const HotelItem = (props) => {
       <td>{props.hotel.title}</td>
       <td>{props.hotel.city}</td>
       <td>
-        <button>Edit</button>
+        <button onClick={editHotelHandler}>Edit</button>
         <button>Delete</button>
       </td>
     </tr>

@@ -2,9 +2,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import DashBoard from "./pages/DashBoard";
 import RootLayout from "./pages/RootLayout";
 import Hotel from "./pages/Hotel";
-import AddHotel from "./pages/AddHotel";
+import FormHotel from "./pages/FormHotel";
 import Room from "./pages/Room";
-import AddRoom from "./pages/AddRoom";
+import FormRoom from "./pages/FormRoom";
 import Transaction from "./pages/Transaction";
 function App() {
   const router = createBrowserRouter([
@@ -17,9 +17,9 @@ function App() {
           element: <DashBoard></DashBoard>,
         },
         { path: "/hotel", element: <Hotel></Hotel> },
-        { path: "/hotel/addhotel", element: <AddHotel></AddHotel> },
+        { path: "/hotel/formhotel", element: <FormHotel></FormHotel> },
         { path: "/room", element: <Room></Room> },
-        { path: "/room/addroom", element: <AddRoom></AddRoom> },
+        { path: "/room/formroom", element: <FormRoom></FormRoom> },
         { path: "/transaction", element: <Transaction></Transaction> },
       ],
     },

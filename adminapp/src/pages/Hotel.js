@@ -16,7 +16,7 @@ const Hotel = () => {
     getListHotel();
   });
   const addnewHotelHandler = () => {
-    navigate("/hotel/addhotel");
+    navigate("/hotel/formhotel?mode=add");
   };
   return (
     <div className={styles.hotelListContainer}>
