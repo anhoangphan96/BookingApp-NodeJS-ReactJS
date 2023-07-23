@@ -25,7 +25,9 @@ const loginSlice = createSlice({
 const initialStateSearch = {
   destination: "",
   date: "",
-  person: 0,
+  adult: 0,
+  children: 0,
+  room: 0,
 };
 
 const searchSlice = createSlice({
@@ -34,8 +36,10 @@ const searchSlice = createSlice({
   reducers: {
     GETSEARCH: (state, action) => {
       state.destination = action.payload.destination;
-      state.person = action.payload.person;
+      state.adult = action.payload.adult;
       state.date = action.payload.date;
+      state.children = action.payload.children;
+      state.room = action.payload.room;
     },
   },
 });

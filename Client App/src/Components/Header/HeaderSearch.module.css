@@ -16,6 +16,7 @@
 .inputcontainer {
   position: relative;
 }
+
 .searchBar input {
   font-family: sans-serif, "FontAwesome";
   font-size: 18px;
@@ -30,6 +31,26 @@
   color: #c2c2c2;
   right: 323px;
 }
+.personInput {
+  display: flex;
+  align-items: center;
+  padding-left: 32px;
+  color: #c2c2c2;
+}
+
+.personInput > input {
+  padding: 4px;
+}
+.adult {
+  width: 20%;
+}
+.children {
+  width: 27%;
+}
+.room {
+  width: 22%;
+}
+
 /* Khi người dùng input vào thì icon sẽ chuyển sang màu đen */
 .iconActive {
   color: black !important;

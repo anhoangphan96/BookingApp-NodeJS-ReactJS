@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const app = express();
 const userRoute = require("./routes/user");
 const homepageRoute = require("./routes/homepage");
+const searchpageRoute = require("./routes/searchpage");
 const detailRoute = require("./routes/detailpage");
 const transactionRoute = require("./routes/transaction");
 const hoteladminRoute = require("./routes/hoteladmin");
@@ -30,10 +31,12 @@ app.use(
 
 app.use(userRoute);
 app.use("/home", homepageRoute);
+app.use("/search", searchpageRoute);
 app.use("/detail", detailRoute);
 app.use("/transaction", transactionRoute);
 app.use("/hotel", hoteladminRoute);
 app.use("/room", roomadminRoute);
+
 mongoose
   .connect(
     "mongodb+srv://anphfx21936:Hoangan512@cluster0.fabhbp4.mongodb.net/bookingApp"

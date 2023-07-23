@@ -16,7 +16,7 @@ const ListHotel = function (props) {
           price: hotel.cheapestPrice,
           rate: hotel.rating,
           //Ở trang homepage ảnh sẽ lấy ảnh đầu tiên trong array ảnh lưu ở database
-          image_url: hotel.photos[2],
+          image_url: hotel.photos[0],
         };
       });
     });

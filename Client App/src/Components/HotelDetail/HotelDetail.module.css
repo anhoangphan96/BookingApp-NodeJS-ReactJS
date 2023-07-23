@@ -47,6 +47,7 @@
 .pictures img {
   width: 100%;
   object-fit: cover;
+  height: 100%;
 }
 /*Xây dựng hiển thị phần mô tả và deal tốt cho khách sạn */
 .descriptionanddeal {

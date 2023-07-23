@@ -1,6 +1,15 @@
 import React from "react";
 import styles from "./SearchListItem.module.css";
+import { useNavigate } from "react-router-dom";
 const SearchListItem = function (props) {
+  const navigate = useNavigate();
+  //Function để viết hoa chữ cái đầu
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+  const seeDetailHandler = () => {
+    navigate(`/detail/${props.id}`);
+  };
   //2 Biến string để sử dụng hiển thị cho deal được cancel free hay không trong các khách sạn
   const cancel = "Free cancellation";
   const cancelText = "You can cancel later, so lock in this great price today!";
@@ -10,24 +19,21 @@ const SearchListItem = function (props) {
       <img src={props.image_url}></img>
       <div className={styles.details}>
         <h3>{props.name}</h3>
-        <span>{props.distance} from center</span>
-        <span className={styles.tag}>{props.tag}</span>
-        <span className={styles.description}>{props.description}</span>
-        <span>{props.type}</span>
-        <span className={styles.cancel}>{props.free_cancel ? cancel : ""}</span>
-        <span className={styles.cancel__text}>
-          {props.free_cancel ? cancelText : ""}
+        <span>{props.distance}m from center</span>
+        <span className={styles.tag}>Free Parking</span>
+        <span className={styles.description}>
+          {capitalizeFirstLetter(props.description)} in {props.city}
         </span>
+        <span>{props.type}</span>
       </div>
       <div className={styles.moreInfors}>
         <div className={styles.rateandtext}>
-          <span className={styles.rate}>{props.rate_text}</span>
-          <span className={styles.ratetext}>{props.rate}</span>
+          <span className={styles.ratetext}>{props.rate.toFixed(1)}</span>
         </div>
         <div className={styles.priceandbook}>
           <span className={styles.price}>${props.price}</span>
           <span className={styles.taxfee}>Includes taxes and fees</span>
-          <button>See availability</button>
+          <button onClick={seeDetailHandler}>See availability</button>
         </div>
       </div>
     </div>

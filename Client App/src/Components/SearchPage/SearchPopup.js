@@ -1,7 +1,9 @@
 import React from "react";
 import styles from "./SearchPopup.module.css";
 import DateRageInput from "../Header/DateRangeInput";
+import { useSelector } from "react-redux";
 const SearchPopup = function () {
+  const dataSearch = useSelector((state) => state.search);
   //Render ra Search PopUp có tái sử dụng lại thẻ Daterange input
   return (
     <div className={styles.searchPopup}>

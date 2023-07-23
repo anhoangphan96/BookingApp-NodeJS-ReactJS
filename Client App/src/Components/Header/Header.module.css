@@ -21,3 +21,7 @@
   background-color: #1c7ed6;
   padding: 10px;
 }
+.btnSignin:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
