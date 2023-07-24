@@ -3,18 +3,19 @@ import styles from "./RoomItem.module.css";
 import { roomListActions } from "../../store/store";
 const RoomItem = (props) => {
   const dispatch = useDispatch();
+  const dayBook = Math.floor(props.dayBook / (24 * 60 * 60 * 1000)) + 1;
   const chooseRomHandler = (event) => {
     if (event.target.checked) {
       dispatch(
         roomListActions.addRoom({
-          price: props.room.price,
+          price: props.room.price * dayBook,
           room: event.target.value,
         })
       );
     } else {
       dispatch(
         roomListActions.removeRoom({
-          price: props.room.price,
+          price: props.room.price * dayBook,
           room: event.target.value,
         })
       );

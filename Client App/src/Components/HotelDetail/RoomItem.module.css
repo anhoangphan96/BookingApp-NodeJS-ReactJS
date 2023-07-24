@@ -1,6 +1,7 @@
 .listRoomNumber {
   display: flex;
-  gap: 8px;
+  gap: 6px;
+  padding: 0px;
 }
 
 .roomNumber {
@@ -8,4 +9,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+.roomNumber > label {
+  font-size: 12px;
+  color: #868e96;
 }

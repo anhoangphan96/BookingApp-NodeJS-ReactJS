@@ -1,5 +1,5 @@
 import styles from "./ReserBookNow.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DateRange } from "react-date-range";
 import { format, addDays } from "date-fns";
 import { useNavigate, useParams } from "react-router-dom";
@@ -13,10 +13,11 @@ const ReserBookNow = () => {
   const params = useParams();
   const [dateFormatted, setDateFormatted] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
+  const [dayBook, setDayBook] = useState(0);
   const [ranges, setRanges] = useState([
     {
       startDate: new Date(),
-      endDate: addDays(new Date(), 3),
+      endDate: new Date(),
       key: "selection",
     },
   ]);
@@ -28,6 +29,16 @@ const ReserBookNow = () => {
     const data = await response.json();
     setListRoom(data);
   };
+  //Khi mới bấm để display giao diện reserve thì stadate và endate sẽ trùng nhau sau đó cũng gọi fetch để lấy roomlit
+  useEffect(() => {
+    const dateRange = `${format(ranges[0].startDate, "dd/MM/yyyy")} - ${format(
+      ranges[0].endDate,
+      "dd/MM/yyyy"
+    )}`;
+    setDayBook(ranges[0].endDate - ranges[0].startDate);
+    getRoomsAvailable(dateRange);
+    setDateFormatted(dateRange);
+  }, []);
 
   const dateRangeHandler = function (ranges) {
     setRanges([ranges.selection]);
@@ -36,6 +47,7 @@ const ReserBookNow = () => {
         ranges.selection.startDate,
         "dd/MM/yyyy"
       )} - ${format(ranges.selection.endDate, "dd/MM/yyyy")}`;
+      setDayBook(ranges.selection.endDate - ranges.selection.startDate);
       getRoomsAvailable(dateRange);
       setDateFormatted(dateRange);
     }
@@ -96,20 +108,20 @@ const ReserBookNow = () => {
         <ul className={styles.listRoom}>
           {listRoom.map((room) => (
             <li className={styles.inforContainer}>
-              <RoomItem room={room} />
+              <RoomItem room={room} dayBook={dayBook} />
             </li>
           ))}
         </ul>
       </div>
       <div className={styles.total}>
         <h3>Total Bill: ${totalPrice}</h3>
-        <div>
+        <div className={styles.methodAndBook}>
           <select onChange={paymentMethodHandler} value={paymentMethod}>
             <option value="">Select Payment Method</option>
             <option value="credit">Credit Card</option>
             <option value="cash">Cash</option>
           </select>
-          <button>Reserve Now</button>
+          <button className={styles.reserveBtn}>Reserve Now</button>
         </div>
       </div>
     </form>
