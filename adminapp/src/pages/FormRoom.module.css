@@ -1,0 +1,41 @@
+.cardContainer {
+  padding: 12px;
+}
+.cardContainer > h3 {
+  margin: 0px;
+  color: #ced4da;
+  font-size: 16px;
+  font-weight: 500;
+}
+.cardFormRoom {
+  margin-top: 16px;
+  padding: 12px 32px;
+}
+.formRoom {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px 240px;
+}
+.inputfield {
+  display: flex;
+  flex-direction: column;
+}
+.inputfield > input {
+  border: none;
+  border-bottom: 1px solid black;
+  padding: 6px;
+}
+.lastRow {
+  display: flex;
+  grid-column: 1/3;
+  justify-content: space-between;
+}
+
+.btnSend {
+  color: white;
+  background-color: #0b7285;
+  font-weight: 600;
+  padding: 8px 48px;
+  border: none;
+  font-size: 12px;
+}

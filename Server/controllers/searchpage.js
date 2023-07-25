@@ -23,6 +23,10 @@ exports.postSearchData = (req, res, next) => {
             $lt: convStringToDate(endDate),
           },
         },
+        {
+          dateStart: { $lt: convertDateHandler(startDate) },
+          dateEnd: { $gte: convertDateHandler(endDate) },
+        },
       ],
     }),
   ])

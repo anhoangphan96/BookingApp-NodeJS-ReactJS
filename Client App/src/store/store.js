@@ -59,7 +59,9 @@ const listRoomSlice = createSlice({
       state.totalPrice += action.payload.price;
     },
     removeRoom: (state, action) => {
-      state.roomsSelected.filter((room) => action.payload.room !== room);
+      state.roomsSelected = [...state.roomsSelected].filter(
+        (room) => action.payload.room !== room
+      );
       state.totalPrice -= action.payload.price;
     },
   },

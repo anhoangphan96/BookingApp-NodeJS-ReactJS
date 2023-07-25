@@ -7,7 +7,7 @@ import RoomItem from "./RoomItem";
 import { useSelector } from "react-redux";
 const ReserBookNow = () => {
   const navigate = useNavigate();
-  const totalPrice = useSelector((state) => state.roomList.totalPrice);
+  const totalPriceOneDay = useSelector((state) => state.roomList.totalPrice);
   const roomsSelected = useSelector((state) => state.roomList.roomsSelected);
   const [listRoom, setListRoom] = useState([]);
   const params = useParams();
@@ -35,7 +35,11 @@ const ReserBookNow = () => {
       ranges[0].endDate,
       "dd/MM/yyyy"
     )}`;
-    setDayBook(ranges[0].endDate - ranges[0].startDate);
+    setDayBook(
+      Math.floor(
+        (ranges[0].endDate - ranges[0].startDate) / (60 * 60 * 24 * 1000)
+      ) + 1
+    );
     getRoomsAvailable(dateRange);
     setDateFormatted(dateRange);
   }, []);
@@ -47,7 +51,12 @@ const ReserBookNow = () => {
         ranges.selection.startDate,
         "dd/MM/yyyy"
       )} - ${format(ranges.selection.endDate, "dd/MM/yyyy")}`;
-      setDayBook(ranges.selection.endDate - ranges.selection.startDate);
+      setDayBook(
+        Math.floor(
+          (ranges.selection.endDate - ranges.selection.startDate) /
+            (60 * 60 * 24 * 1000)
+        ) + 1
+      );
       getRoomsAvailable(dateRange);
       setDateFormatted(dateRange);
     }
@@ -67,7 +76,7 @@ const ReserBookNow = () => {
       body: JSON.stringify({
         hotelId: idHotel,
         roomList: roomsSelected,
-        totalPrice: totalPrice,
+        totalPrice: totalPriceOneDay * dayBook,
         date: dateFormatted,
         payMethod: paymentMethod,
       }),
@@ -114,7 +123,7 @@ const ReserBookNow = () => {
         </ul>
       </div>
       <div className={styles.total}>
-        <h3>Total Bill: ${totalPrice}</h3>
+        <h3>Total Bill: ${totalPriceOneDay * dayBook}</h3>
         <div className={styles.methodAndBook}>
           <select onChange={paymentMethodHandler} value={paymentMethod}>
             <option value="">Select Payment Method</option>

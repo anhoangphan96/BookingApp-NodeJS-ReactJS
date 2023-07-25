@@ -1,6 +1,10 @@
 import { format } from "date-fns";
+import styles from "./TransactionItem.module.css";
 
 const TransactionItem = (props) => {
+  let paymentMethod =
+    props.transaction.payment === "credit" ? "Credit Card" : "Cash";
+
   const stateDate = format(
     Date.parse(props.transaction.dateStart),
     "dd/MM/yyyy"
@@ -8,15 +12,17 @@ const TransactionItem = (props) => {
   const endDate = format(Date.parse(props.transaction.dateEnd), "dd/MM/yyyy");
   return (
     <tr>
-      <td>{props.order}</td>
+      <td>{String(props.order).padStart(2, "0")}</td>
       <td>{props.transaction.hotel.name}</td>
-      <td>{props.transaction.room.join(",")}</td>
+      <td>{props.transaction.room.join(", ")}</td>
       <td>
         {stateDate} - {endDate}
       </td>
       <td>${props.transaction.price}</td>
-      <td>{props.transaction.payment}</td>
-      <td>{props.transaction.status}</td>
+      <td>{paymentMethod}</td>
+      <td className={`${styles[props.transaction.status]}`}>
+        <span>{props.transaction.status}</span>
+      </td>
     </tr>
   );
 };

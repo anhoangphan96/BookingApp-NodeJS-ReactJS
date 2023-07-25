@@ -12,28 +12,35 @@ const TransactionData = () => {
     });
     const data = await response.json();
     console.log(data);
-    setdataTransaction(data);
+    //Đặt lại state chứa list transaction và sort theo thứ tự start date giảm dần
+    setdataTransaction(
+      data.sort(
+        (a, b) =>
+          Number(Date.parse(b.dateStart)) - Number(Date.parse(a.dateStart))
+      )
+    );
   };
   useEffect(() => {
     getTransactionData();
   }, []);
   return (
-    <div className={styles.container}>
-      <table>
+    <div className={styles.transactionContainer}>
+      <h3>Your Transactions</h3>
+      <table className={styles.tableTransactions}>
         <tbody>
           <tr>
             <th>#</th>
-            <th>Hotel</th>
-            <th>Room</th>
-            <th>Date</th>
+            <th className={styles.hotelColumn}>Hotel</th>
+            <th className={styles.roomColumn}>Room</th>
+            <th className={styles.dateColumn}>Date</th>
             <th>Price</th>
             <th>Payment Method</th>
-            <th>Status</th>
+            <th className={styles.stutusColumn}>Status</th>
           </tr>
           {dataTransaction.map((trans, i) => (
             <TransactionItem
               transaction={trans}
-              key={i + 1}
+              key={trans._id}
               order={i + 1}
             ></TransactionItem>
           ))}

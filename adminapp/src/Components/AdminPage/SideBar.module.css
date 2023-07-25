@@ -4,7 +4,7 @@
   height: 100%;
 }
 
-.sidebarContainer > h2 {
+.sidebarContainer h2 {
   text-align: center;
   color: #7950f2;
   padding-bottom: 16px;

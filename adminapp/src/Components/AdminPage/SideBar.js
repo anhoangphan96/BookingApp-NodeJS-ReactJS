@@ -4,7 +4,9 @@ import styles from "./SideBar.module.css";
 const SideBar = () => {
   return (
     <div className={styles.sidebarContainer}>
-      <h2>Admin Page</h2>
+      <Link to="/">
+        <h2>Admin Page</h2>
+      </Link>
       <ul>
         <h4>MAIN</h4>
         <li>

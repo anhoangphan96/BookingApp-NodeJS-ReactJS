@@ -1,8 +1,7 @@
-.tabledata {
+.tabledata,
+.tabledata tr {
   font-size: 12px;
   border: 1px solid #adb5bd;
-}
-.tabledata tr {
 }
 
 .tabledata th {
