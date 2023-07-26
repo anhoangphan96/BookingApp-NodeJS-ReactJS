@@ -3,6 +3,7 @@ import Card from "../CardContainer/Card";
 import styles from "./TransactionAdmin.module.css";
 import TransactionItem from "./TransactionItem";
 import { useLocation } from "react-router-dom";
+import Pagination from "../CardContainer/Pagination";
 
 const TransactionAdmin = () => {
   const urlLocation = useLocation().pathname;
@@ -28,22 +29,39 @@ const TransactionAdmin = () => {
       <table className={styles.tabledata}>
         <tbody>
           <tr>
-            <th>
+            <th className={styles.firstCheckbox}>
               <input type="checkbox"></input>
             </th>
-            <th>ID</th>
-            <th>User</th>
-            <th>Hotel</th>
-            <th>Room</th>
-            <th>Date</th>
-            <th>Price</th>
-            <th>Payment Method</th>
-            <th>Status</th>
+            <th className={styles.transId}>
+              <span>ID</span>
+            </th>
+            <th className={styles.transUser}>
+              <span>User</span>
+            </th>
+            <th className={styles.transHotel}>
+              <span>Hotel</span>
+            </th>
+            <th className={styles.transRoom}>
+              <span>Room</span>
+            </th>
+            <th className={styles.transDate}>
+              <span>Date</span>
+            </th>
+            <th className={styles.transPrice}>
+              <span>Price</span>
+            </th>
+            <th className={styles.transPayMethod}>
+              <span>Payment Method</span>
+            </th>
+            <th>
+              <span>Status</span>
+            </th>
           </tr>
           {listTrans.length > 0 &&
             listTrans.map((trans, i) => (
               <TransactionItem transaction={trans} />
             ))}
+          <Pagination listLength={listTrans.length}></Pagination>
         </tbody>
       </table>
     </>

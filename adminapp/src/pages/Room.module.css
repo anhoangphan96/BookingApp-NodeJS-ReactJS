@@ -5,5 +5,74 @@
 }
 .title {
   display: flex;
+  align-items: center;
   justify-content: space-between;
+}
+.addNewBtn {
+  color: #2b8a3e;
+  background-color: white;
+  border: 1px solid #2b8a3e;
+  border-radius: 4px;
+  padding: 6px 4px;
+}
+.addNewBtn:hover {
+  background-color: #2b8a3e;
+  color: white;
+  cursor: pointer;
+}
+.tabledata {
+  font-size: 12px;
+  border: 1px solid #adb5bd;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.tabledata th,
+.tabledata td {
+  border-bottom: 1px solid #adb5bd;
+}
+
+.tabledata th {
+  font-weight: 400;
+  text-align: left;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.tabledata th > span {
+  padding-left: 6px;
+  border-left: 1.5px solid #adb5bd;
+}
+
+.tabledata td {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 7.5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tabledata .lastRow {
+  padding: 0px;
+}
+.firstCheckbox {
+  padding-left: 7.5px;
+  width: 25px;
+}
+
+/* Điều chỉnh độ rộng của các column */
+.idColumn {
+  width: 160px;
+}
+.titleColumn {
+  width: 240px;
+}
+.descColumn {
+  width: 300px;
+}
+.priceColumn {
+  width: 80px;
+}
+.maxPeopleColumn {
+  width: 120px;
 }

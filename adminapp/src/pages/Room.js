@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "./Room.module.css";
 import { useNavigate } from "react-router-dom";
 import RoomItem from "../Components/AdminPage/RoomItem";
+import Pagination from "../Components/CardContainer/Pagination";
 const Room = () => {
   const navigate = useNavigate();
   const [listRoom, setListRoom] = useState([]);
@@ -15,29 +16,44 @@ const Room = () => {
     getListRoom();
   });
   const addnewRoomHandler = () => {
-    navigate("/room/formroom?mode=add");
+    navigate("/room/formroom  ?mode=add");
   };
   return (
     <div className={styles.roomListContainer}>
       <div className={styles.title}>
         <h3>Rooms List</h3>
-        <button onClick={addnewRoomHandler}>Add New</button>
+        <button onClick={addnewRoomHandler} className={styles.addNewBtn}>
+          Add New
+        </button>
       </div>
-      <table>
+      <table className={styles.tabledata}>
         <tbody>
           <tr>
-            <th>
+            <th className={styles.firstCheckbox}>
               <input type="checkbox"></input>
             </th>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Max people</th>
-            <th>Action</th>
+            <th className={styles.idColumn}>
+              <span>ID</span>
+            </th>
+            <th className={styles.titleColumn}>
+              <span>Title</span>
+            </th>
+            <th className={styles.descColumn}>
+              <span>Description</span>
+            </th>
+            <th className={styles.priceColumn}>
+              <span>Price</span>
+            </th>
+            <th className={styles.maxPeopleColumn}>
+              <span>Max people</span>
+            </th>
+            <th>
+              <span>Action</span>
+            </th>
           </tr>
           {listRoom.length > 0 &&
             listRoom.map((room) => <RoomItem key={room._id} room={room} />)}
+          <Pagination listLength={listRoom.length}></Pagination>
         </tbody>
       </table>
     </div>

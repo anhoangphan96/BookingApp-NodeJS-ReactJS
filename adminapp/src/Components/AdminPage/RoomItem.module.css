@@ -1,0 +1,45 @@
+.editBtn {
+  width: 50px;
+  font-size: 12px;
+  color: #f08c00;
+  background-color: white;
+  border: 1px solid #f08c00;
+  border-radius: 4px;
+  padding: 4px 2px;
+}
+.editBtn:hover {
+  color: white;
+  background-color: #f08c00;
+  cursor: pointer;
+}
+.deleteBtn {
+  width: 50px;
+  font-size: 12px;
+  color: #f03e3e;
+  background-color: white;
+  border: 1px dashed #f03e3e;
+  border-radius: 4px;
+  padding: 4px 2px;
+  margin-left: 2%;
+}
+.deleteBtn:hover {
+  color: white;
+  background-color: #f03e3e;
+  cursor: pointer;
+}
+/* Điều chỉnh độ rộng của các column */
+.idColumn {
+  max-width: 160px;
+}
+.titleColumn {
+  max-width: 240px;
+}
+.descColumn {
+  max-width: 300px;
+}
+.priceColumn {
+  max-width: 80px;
+}
+.maxPeopleColumn {
+  max-width: 120px;
+}

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "./Hotel.module.css";
 import HotelItem from "../Components/AdminPage/HotelItem";
 import { useNavigate } from "react-router-dom";
+import Pagination from "../Components/CardContainer/Pagination";
 
 const Hotel = () => {
   const navigate = useNavigate();
@@ -22,25 +23,40 @@ const Hotel = () => {
     <div className={styles.hotelListContainer}>
       <div className={styles.title}>
         <h3>Hotels List</h3>
-        <button onClick={addnewHotelHandler}>Add New</button>
+        <button onClick={addnewHotelHandler} className={styles.addNewBtn}>
+          Add New
+        </button>
       </div>
-      <table>
+      <table className={styles.tabledata}>
         <tbody>
           <tr>
-            <th>
+            <th className={styles.firstCheckbox}>
               <input type="checkbox"></input>
             </th>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Title</th>
-            <th>City</th>
-            <th>Action</th>
+            <th className={styles.idColumn}>
+              <span>ID</span>
+            </th>
+            <th className={styles.nameColumn}>
+              <span>Name</span>
+            </th>
+            <th className={styles.typeColumn}>
+              <span>Type</span>
+            </th>
+            <th className={styles.titleColumn}>
+              <span>Title</span>
+            </th>
+            <th className={styles.cityColumn}>
+              <span>City</span>
+            </th>
+            <th>
+              <span>Action</span>
+            </th>
           </tr>
           {listHotel.length > 0 &&
             listHotel.map((hotel) => (
               <HotelItem key={hotel._id} hotel={hotel} />
             ))}
+          <Pagination listLength={listHotel.length}></Pagination>
         </tbody>
       </table>
     </div>

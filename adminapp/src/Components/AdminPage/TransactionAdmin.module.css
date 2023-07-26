@@ -1,10 +1,56 @@
-.tabledata,
-.tabledata tr {
+.tabledata {
   font-size: 12px;
   border: 1px solid #adb5bd;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.tabledata th,
+.tabledata td {
+  border-bottom: 1px solid #adb5bd;
+  padding-top: 12px;
+  padding-bottom: 12px;
 }
 
 .tabledata th {
   font-weight: 400;
   text-align: left;
+}
+.tabledata th > span {
+  padding-left: 6px;
+  border-left: 1.5px solid #adb5bd;
+}
+
+.tabledata td {
+  padding-left: 7.5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.firstCheckbox {
+  padding-left: 7.5px;
+  width: 25px;
+}
+/* Điều chỉnh chiều rộng của các cột trong table */
+.transId {
+  width: 160px;
+}
+.transUser {
+  width: 120px;
+}
+.transHotel {
+  width: 200px;
+}
+.transRoom {
+  width: 100px;
+}
+.transDate {
+  width: 150px;
+}
+.transPrice {
+  width: 80px;
+}
+.transPayMethod {
+  width: 100px;
 }

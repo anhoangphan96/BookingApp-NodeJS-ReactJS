@@ -1,0 +1,40 @@
+.Booked > span {
+  color: #2b8a3e;
+  background-color: #ffa8a8;
+  padding: 4px 6px;
+  border-radius: 4px;
+}
+.Checkin > span {
+  color: #2b8a3e;
+  background-color: #51cf66;
+  padding: 4px 6px;
+  border-radius: 4px;
+}
+.Checkout > span {
+  color: #2b8a3e;
+  background-color: #bac8ff;
+  padding: 4px 6px;
+  border-radius: 4px;
+}
+/* Điều chỉnh chiều rộng của các cột trong table */
+.transId {
+  max-width: 160px;
+}
+.transUser {
+  max-width: 120px;
+}
+.transHotel {
+  max-width: 200px;
+}
+.transRoom {
+  max-width: 100px;
+}
+.transDate {
+  max-width: 150px;
+}
+.transPrice {
+  max-width: 80px;
+}
+.transPayMethod {
+  max-width: 100px;
+}

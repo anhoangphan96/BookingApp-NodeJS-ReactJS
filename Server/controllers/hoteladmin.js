@@ -85,3 +85,12 @@ exports.postUpdateHotel = (req, res, next) => {
     })
     .catch((err) => console.log(err));
 };
+
+exports.deleteOneHotel = (req, res, next) => {
+  const hotelId = req.body.hotelId;
+  Hotel.findByIdAndDelete(hotelId)
+    .then(() => {
+      res.status(200).json({ message: "Delete succesfully" });
+    })
+    .catch((err) => console.log(err));
+};

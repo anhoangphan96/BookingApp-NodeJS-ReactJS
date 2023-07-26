@@ -79,3 +79,12 @@ exports.updateOneRoom = (req, res, next) => {
       console.log(err);
     });
 };
+
+exports.deleteOneRoom = (req, res, next) => {
+  const roomId = req.body.roomId;
+  Room.findByIdAndDelete(roomId)
+    .then(() => {
+      res.status(200).json({ message: "Delete succesfully" });
+    })
+    .catch((err) => console.log(err));
+};
