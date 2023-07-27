@@ -7,6 +7,7 @@ import Room from "./pages/Room";
 import FormRoom from "./pages/FormRoom";
 import Transaction from "./pages/Transaction";
 import User from "./pages/User";
+import Login from "./pages/Login";
 function App() {
   const router = createBrowserRouter([
     {
@@ -18,6 +19,7 @@ function App() {
           element: <DashBoard></DashBoard>,
         },
         { path: "/user", element: <User></User> },
+        { path: "/login", element: <Login></Login> },
         { path: "/hotel", element: <Hotel></Hotel> },
         { path: "/hotel/formhotel", element: <FormHotel></FormHotel> },
         { path: "/room", element: <Room></Room> },
