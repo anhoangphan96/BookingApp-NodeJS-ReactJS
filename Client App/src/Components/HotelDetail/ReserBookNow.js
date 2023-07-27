@@ -5,6 +5,7 @@ import { format, addDays } from "date-fns";
 import { useNavigate, useParams } from "react-router-dom";
 import RoomItem from "./RoomItem";
 import { useSelector } from "react-redux";
+import ReserveInfor from "./ReserveInfor";
 const ReserBookNow = () => {
   const navigate = useNavigate();
   const totalPriceOneDay = useSelector((state) => state.roomList.totalPrice);
@@ -24,7 +25,12 @@ const ReserBookNow = () => {
   const idHotel = params.id;
   const getRoomsAvailable = async (dateRange) => {
     const response = await fetch(
-      `http://localhost:5000/detail/${idHotel}/rooms/available?dateRange=${dateRange}`
+      `http://localhost:5000/detail/${idHotel}/rooms/available?dateRange=${dateRange}`,
+      {
+        method: "GET",
+        mode: "cors",
+        credentials: "include",
+      }
     );
     const data = await response.json();
     setListRoom(data);
@@ -85,7 +91,7 @@ const ReserBookNow = () => {
       navigate("/transaction");
     }
   };
-
+  console.log(listRoom);
   return (
     <form className={styles.formBook} onSubmit={reserveNowHandler}>
       <div className={styles.dateandinfor}>
@@ -100,25 +106,13 @@ const ReserBookNow = () => {
             ranges={ranges}
           />
         </div>
-        <div className={styles.infor}>
-          <h3>Reserve Info</h3>
-          <label htmlFor="fullName">Your Full Name:</label>
-          <input id="fullName" placeholder="Full Name"></input>
-          <label htmlFor="email">Your Email:</label>
-          <input id="email" placeholder="Email"></input>
-          <label htmlFor="phone">Your Phone Number:</label>
-          <input id="phone" placeholder="Phone Number"></input>
-          <label htmlFor="cardnumber">Your Your Identity Card Number:</label>
-          <input id="cardnumber" placeholder="Card Number"></input>
-        </div>
+        <ReserveInfor></ReserveInfor>
       </div>
       <div className={styles.selectRooms}>
         <h3>Select Rooms</h3>
         <ul className={styles.listRoom}>
           {listRoom.map((room) => (
-            <li className={styles.inforContainer}>
-              <RoomItem room={room} dayBook={dayBook} />
-            </li>
+            <RoomItem room={room} dayBook={dayBook} key={room._id} />
           ))}
         </ul>
       </div>

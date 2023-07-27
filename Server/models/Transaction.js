@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-
+//Schema và export model của Transaction
 const transactionSchema = new Schema({
   user: {
     type: String,

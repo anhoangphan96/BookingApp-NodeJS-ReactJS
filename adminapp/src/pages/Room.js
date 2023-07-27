@@ -16,7 +16,7 @@ const Room = () => {
     getListRoom();
   });
   const addnewRoomHandler = () => {
-    navigate("/room/formroom  ?mode=add");
+    navigate("/room/formroom?mode=add");
   };
   return (
     <div className={styles.roomListContainer}>

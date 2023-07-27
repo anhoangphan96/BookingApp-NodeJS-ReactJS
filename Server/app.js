@@ -6,9 +6,11 @@ const bodyParser = require("body-parser");
 
 const app = express();
 const userRoute = require("./routes/user");
+const checkAuthorController = require("./controllers/checkAuthor");
 const homepageRoute = require("./routes/homepage");
 const searchpageRoute = require("./routes/searchpage");
 const detailRoute = require("./routes/detailpage");
+const useradminRoute = require("./routes/useradmin");
 const transactionRoute = require("./routes/transaction");
 const hoteladminRoute = require("./routes/hoteladmin");
 const roomadminRoute = require("./routes/room");
@@ -26,13 +28,19 @@ app.use(
     secret: "my-secret",
     resave: false,
     saveUninitialized: false,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 30, // thời gian sống của cookie do session gửi trả client-side là 30 ngày
+      httpOnly: true,
+    },
   })
 );
 
 app.use(userRoute);
 app.use("/home", homepageRoute);
+// app.use(checkAuthorController.checkAuthor);
 app.use("/search", searchpageRoute);
 app.use("/detail", detailRoute);
+app.use("/useradmin", useradminRoute);
 app.use("/transaction", transactionRoute);
 app.use("/hotel", hoteladminRoute);
 app.use("/room", roomadminRoute);

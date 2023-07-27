@@ -22,7 +22,7 @@ const RoomItem = (props) => {
     }
   };
   return (
-    <>
+    <li className={styles.inforContainer}>
       <div>
         <h4>{props.room.title}</h4>
         <p>{props.room.desc}</p>
@@ -31,7 +31,7 @@ const RoomItem = (props) => {
       </div>
       <ul className={styles.listRoomNumber}>
         {props.room.roomNumbers.map((rnum) => (
-          <li className={styles.roomNumber}>
+          <li className={styles.roomNumber} key={rnum}>
             <label htmlFor={rnum}>{rnum}</label>
             <input
               type="checkbox"
@@ -43,7 +43,7 @@ const RoomItem = (props) => {
           </li>
         ))}
       </ul>
-    </>
+    </li>
   );
 };
 

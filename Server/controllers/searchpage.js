@@ -14,18 +14,18 @@ exports.postSearchData = (req, res, next) => {
         {
           dateStart: {
             $gte: convStringToDate(startDate),
-            $lt: convStringToDate(endDate),
+            $lte: convStringToDate(endDate),
           },
         },
         {
           dateEnd: {
             $gte: convStringToDate(startDate),
-            $lt: convStringToDate(endDate),
+            $lte: convStringToDate(endDate),
           },
         },
         {
-          dateStart: { $lt: convertDateHandler(startDate) },
-          dateEnd: { $gte: convertDateHandler(endDate) },
+          dateStart: { $lte: convStringToDate(startDate) },
+          dateEnd: { $gte: convStringToDate(endDate) },
         },
       ],
     }),

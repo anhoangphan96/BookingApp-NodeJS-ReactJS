@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-
+//Tạo schema và export model của User
 const userSchema = new Schema({
   username: {
     type: String,
@@ -15,7 +15,7 @@ const userSchema = new Schema({
     required: true,
   },
   phoneNumber: {
-    type: Number,
+    type: String,
     required: true,
   },
   email: {
@@ -27,4 +27,5 @@ const userSchema = new Schema({
     required: true,
   },
 });
+
 module.exports = mongoose.model("User", userSchema);

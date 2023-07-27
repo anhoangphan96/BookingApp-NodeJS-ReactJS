@@ -1,24 +1,39 @@
 import { useEffect, useState } from "react";
 import styles from "./TransactionData.module.css";
 import TransactionItem from "./TransactionItem";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginActions } from "../../store/store";
 
 const TransactionData = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [dataTransaction, setdataTransaction] = useState([]);
   const getTransactionData = async () => {
-    const response = await fetch(`http://localhost:5000/transaction/data`, {
-      method: "GET",
-      mode: "cors",
-      credentials: "include",
-    });
-    const data = await response.json();
-    console.log(data);
-    //Đặt lại state chứa list transaction và sort theo thứ tự start date giảm dần
-    setdataTransaction(
-      data.sort(
-        (a, b) =>
-          Number(Date.parse(b.dateStart)) - Number(Date.parse(a.dateStart))
-      )
-    );
+    try {
+      const response = await fetch(`http://localhost:5000/transaction/data`, {
+        method: "GET",
+        mode: "cors",
+        credentials: "include",
+      });
+      if (response.status === 401) {
+        const errorMessage = await response.json();
+        dispatch(loginActions.LOGOUT());
+        navigate("/user?mode=login");
+        throw new Error(errorMessage.message);
+      }
+      const data = await response.json();
+      console.log(data);
+      //Đặt lại state chứa list transaction và sort theo thứ tự start date giảm dần
+      setdataTransaction(
+        data.sort(
+          (a, b) =>
+            Number(Date.parse(b.dateStart)) - Number(Date.parse(a.dateStart))
+        )
+      );
+    } catch (err) {
+      console.log(err);
+    }
   };
   useEffect(() => {
     getTransactionData();

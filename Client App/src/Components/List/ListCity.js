@@ -1,7 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styles from "./ListCity.module.css";
 import CityItem from "./CityItem";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginActions } from "../../store/store";
 const ListCity = function (props) {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [listCity, setListCity] = useState([
     {
       name: "Ha Noi",
@@ -20,28 +25,42 @@ const ListCity = function (props) {
     },
   ]);
   const getDataListCity = async function () {
-    const response = await fetch("http://localhost:5000/home/listcity");
-    const data = await response.json();
-    //Set state mới từ data backend gửi lên cho listCity
-    setListCity((prev) => {
-      const updateListCity = [...prev].map((city) => {
-        //index của city từ data backend fetch lên
-        const index = data.findIndex((c) => {
-          return c.city === city.name;
-        });
-        //Cập nhật số hotel(properties có ở mỗi thành phố )
-        const updateCity =
-          index >= 0
-            ? {
-                ...city,
-                subText: `${data[index].properties} properties`,
-              }
-            : { ...city };
-
-        return updateCity;
+    try {
+      const response = await fetch("http://localhost:5000/home/listcity", {
+        method: "GET",
+        mode: "cors",
+        credentials: "include",
       });
-      return updateListCity;
-    });
+      if (response.status === 401) {
+        const errorMessage = await response.json();
+        dispatch(loginActions.LOGOUT());
+        navigate("/user?mode=login");
+        throw new Error(errorMessage.message);
+      }
+      const data = await response.json();
+      //Set state mới từ data backend gửi lên cho listCity
+      setListCity((prev) => {
+        const updateListCity = [...prev].map((city) => {
+          //index của city từ data backend fetch lên
+          const index = data.findIndex((c) => {
+            return c.city === city.name;
+          });
+          //Cập nhật số hotel(properties có ở mỗi thành phố )
+          const updateCity =
+            index >= 0
+              ? {
+                  ...city,
+                  subText: `${data[index].properties} properties`,
+                }
+              : { ...city };
+
+          return updateCity;
+        });
+        return updateListCity;
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
   useEffect(() => {
     getDataListCity();

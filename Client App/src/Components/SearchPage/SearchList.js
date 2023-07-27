@@ -2,19 +2,34 @@ import React, { useEffect, useState } from "react";
 import styles from "./SearchList.module.css";
 import SearchListItem from "./SearchListItem";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginActions } from "../../store/store";
 const SearchList = function () {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const searchData = useSelector((state) => state.search);
   const [searchList, setSearchList] = useState([]);
   const postSearchData = async () => {
-    const response = await fetch(`http://localhost:5000/search`, {
-      method: "POST",
-      mode: "cors",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify(searchData),
-    });
-    const data = await response.json();
-    setSearchList(data);
+    try {
+      const response = await fetch(`http://localhost:5000/search`, {
+        method: "POST",
+        mode: "cors",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(searchData),
+      });
+      if (response.status === 401) {
+        const errorMessage = await response.json();
+        dispatch(loginActions.LOGOUT());
+        navigate("/user?mode=login");
+        throw new Error(errorMessage.message);
+      }
+      const data = await response.json();
+      setSearchList(data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
@@ -24,6 +39,9 @@ const SearchList = function () {
   //Render ra list các Thẻ thông tin khách sạn trong danh sách tìm kiếm
   return (
     <div className={styles.searchList}>
+      {searchList.length === 0 && (
+        <h3 className={styles.message}>No Hotel Found!</h3>
+      )}
       {searchList.map((item) => (
         <SearchListItem
           key={item._id}

@@ -2,16 +2,35 @@ import React, { useEffect, useState } from "react";
 import styles from "./HotelDetail.module.css";
 import { useParams } from "react-router-dom";
 import ReserBookNow from "./ReserBookNow";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginActions } from "../../store/store";
 const HotelDetail = function () {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [hotelDetail, setHotelDetail] = useState(null);
   const [isOpenBookNow, setIsOpenBookNow] = useState(false);
   const params = useParams();
   const idHotel = params.id;
   const getHotelDetail = async () => {
-    const response = await fetch(`http://localhost:5000/detail/${idHotel}`);
-    const data = await response.json();
-    console.log(data);
-    setHotelDetail(data);
+    try {
+      const response = await fetch(`http://localhost:5000/detail/${idHotel}`, {
+        method: "GET",
+        mode: "cors",
+        credentials: "include",
+      });
+      if (response.status === 401) {
+        const errorMessage = await response.json();
+        dispatch(loginActions.LOGOUT());
+        navigate("/user?mode=login");
+        throw new Error(errorMessage.message);
+      }
+      const data = await response.json();
+      console.log(data);
+      setHotelDetail(data);
+    } catch (err) {
+      console.log(err);
+    }
   };
   useEffect(() => {
     getHotelDetail();
@@ -42,8 +61,8 @@ const HotelDetail = function () {
           </div>
         </div>
         <div className={styles.pictures}>
-          {hotelDetail.photos.map((image) => (
-            <img src={image} />
+          {hotelDetail.photos.map((image, i) => (
+            <img src={image} key={i + 1} />
           ))}
         </div>
         <div className={styles.descriptionanddeal}>

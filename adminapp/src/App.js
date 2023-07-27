@@ -6,6 +6,7 @@ import FormHotel from "./pages/FormHotel";
 import Room from "./pages/Room";
 import FormRoom from "./pages/FormRoom";
 import Transaction from "./pages/Transaction";
+import User from "./pages/User";
 function App() {
   const router = createBrowserRouter([
     {
@@ -16,6 +17,7 @@ function App() {
           index: true,
           element: <DashBoard></DashBoard>,
         },
+        { path: "/user", element: <User></User> },
         { path: "/hotel", element: <Hotel></Hotel> },
         { path: "/hotel/formhotel", element: <FormHotel></FormHotel> },
         { path: "/room", element: <Room></Room> },

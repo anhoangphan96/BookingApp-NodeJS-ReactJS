@@ -15,6 +15,7 @@ function App() {
     const response = await fetch("http://localhost:5000/user", {
       method: "GET",
       credentials: "include",
+      mode: "cors",
     });
     const data = await response.json();
     console.log(data);

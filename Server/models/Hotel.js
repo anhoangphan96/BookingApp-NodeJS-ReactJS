@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-
+//Tạo schema và export model của Hotel
 const hotelSchema = new Schema({
   name: {
     type: String,
@@ -19,7 +19,7 @@ const hotelSchema = new Schema({
     required: true,
   },
   distance: {
-    type: Number,
+    type: String,
     required: true,
   },
   title: {

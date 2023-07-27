@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-
+//Schema và export model của Room
 const roomSchema = new Schema({
   title: {
     type: String,

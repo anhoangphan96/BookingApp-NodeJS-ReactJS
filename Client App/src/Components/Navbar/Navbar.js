@@ -53,15 +53,20 @@ const Navbar = (props) => {
     // gọi hàm set State cho arr vừa được thay đổi
     setnavbarArr(navbarArrChange);
   };
-
-  const logoutHandler = async () => {
-    dispatch(loginActions.LOGOUT());
+  const postLogout = async () => {
     const response = await fetch(`http://localhost:5000/user/logout`, {
       method: "POST",
       mode: "cors",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
     });
+    if (response.ok) {
+      dispatch(loginActions.LOGOUT());
+    }
+  };
+
+  const logoutHandler = () => {
+    postLogout();
   };
 
   //Trả ra JSX theo giao diện của bài yêu cầu, render các phần tử navBar bằng phương thức map của array.

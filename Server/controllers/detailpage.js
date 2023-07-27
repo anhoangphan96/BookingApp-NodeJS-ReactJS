@@ -1,5 +1,5 @@
 const Hotel = require("../models/Hotel");
-const Room = require("../models/Room");
+const User = require("../models/User");
 const Transaction = require("../models/Transaction");
 const convertDateHandler = require("../utils/convertDate");
 exports.getDetailData = (req, res, next) => {
@@ -20,17 +20,17 @@ exports.getRoomAvailable = (req, res, next) => {
         {
           dateStart: {
             $gte: convertDateHandler(startDate),
-            $lt: convertDateHandler(endDate),
+            $lte: convertDateHandler(endDate),
           },
         },
         {
           dateEnd: {
             $gte: convertDateHandler(startDate),
-            $lt: convertDateHandler(endDate),
+            $lte: convertDateHandler(endDate),
           },
         },
         {
-          dateStart: { $lt: convertDateHandler(startDate) },
+          dateStart: { $lte: convertDateHandler(startDate) },
           dateEnd: { $gte: convertDateHandler(endDate) },
         },
       ],
@@ -47,11 +47,8 @@ exports.getRoomAvailable = (req, res, next) => {
         });
       });
       const listRoomId = hotel.rooms;
-      console.log(listRoomId);
       const roomsAvailable = listRoomId.map((room) => {
         const updateRoom = { ...room }._doc;
-        console.log(updateRoom);
-        console.log(listRoomBooked);
         return {
           ...updateRoom,
           roomNumbers: updateRoom.roomNumbers.filter(
@@ -60,6 +57,20 @@ exports.getRoomAvailable = (req, res, next) => {
         };
       });
       res.status(200).json(roomsAvailable);
+    })
+    .catch((err) => console.log(err));
+};
+
+exports.getUserData = (req, res, next) => {
+  const username = req.session.username;
+  User.find({ username: username })
+    .then((result) => {
+      res.status(200).json({
+        username: result[0].username,
+        fullName: result[0].fullName,
+        phoneNumber: result[0].phoneNumber,
+        email: result[0].email,
+      });
     })
     .catch((err) => console.log(err));
 };

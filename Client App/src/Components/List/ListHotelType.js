@@ -1,7 +1,12 @@
 import React, { useEffect, useState, useCallback } from "react";
 import styles from "./ListHotelType.module.css";
 import HotelTypeItem from "./HotelTypeItem";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginActions } from "../../store/store";
 const ListHotelType = function (props) {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [listHotelType, setListHotelType] = useState([
     {
       name: "Hotels",
@@ -31,18 +36,33 @@ const ListHotelType = function (props) {
   ]);
 
   const getDataListHotelType = async () => {
-    const response = await fetch("http://localhost:5000/home/listhoteltype");
-    const data = await response.json();
-    setListHotelType((prev) => {
-      const updateListHotelType = [...prev];
-      data.forEach((t) => {
-        const index = prev.findIndex(
-          (type) => type.name.toLowerCase() === t.type.toLowerCase()
-        );
-        updateListHotelType[index].count = t.count;
+    try {
+      const response = await fetch("http://localhost:5000/home/listhoteltype", {
+        method: "GET",
+        mode: "cors",
+        credentials: "include",
       });
-      return updateListHotelType;
-    });
+      if (response.status === 401) {
+        const errorMessage = await response.json();
+        dispatch(loginActions.LOGOUT());
+        navigate("/user?mode=login");
+
+        throw new Error(errorMessage.message);
+      }
+      const data = await response.json();
+      setListHotelType((prev) => {
+        const updateListHotelType = [...prev];
+        data.forEach((t) => {
+          const index = prev.findIndex(
+            (type) => type.name.toLowerCase() === t.type.toLowerCase()
+          );
+          updateListHotelType[index].count = t.count;
+        });
+        return updateListHotelType;
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
   useEffect(() => {
     getDataListHotelType();
