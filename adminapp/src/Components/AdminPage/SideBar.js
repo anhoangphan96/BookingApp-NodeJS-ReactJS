@@ -2,6 +2,20 @@ import { Link } from "react-router-dom";
 import styles from "./SideBar.module.css";
 
 const SideBar = () => {
+  const clickToLogout = async () => {
+    const response = await fetch(`http://localhost:5000/useradmin/logout`, {
+      method: "POST",
+      credentials: "include",
+      mode: "cors",
+      headers: { "Content-Type": "application/json" },
+    });
+    console.log(await response.json());
+  };
+
+  const logoutHandler = () => {
+    clickToLogout();
+  };
+
   return (
     <div className={styles.sidebarContainer}>
       <Link to="/">
@@ -168,7 +182,9 @@ const SideBar = () => {
             <path d="M9 12h12l-3 -3"></path>
             <path d="M18 15l3 -3"></path>
           </svg>
-          <Link>Logout</Link>
+          <Link to="/login" onClick={logoutHandler}>
+            Logout
+          </Link>
         </li>
       </ul>
     </div>

@@ -52,7 +52,7 @@ exports.checkLogin = (req, res, next) => {
   }
 };
 exports.logout = (req, res, next) => {
-  req.session.destroy((err) => {
+  req.session.destroy((result) => {
     res.status(200).json({ message: "Log out succesfully" });
   });
 };

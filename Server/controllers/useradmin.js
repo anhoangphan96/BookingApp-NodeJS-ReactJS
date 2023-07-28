@@ -46,3 +46,9 @@ exports.login = (req, res, next) => {
     })
     .catch((err) => console.log(err));
 };
+
+exports.postLogout = (req, res, next) => {
+  req.session.destroy((result) => {
+    res.status(200).json({ message: "Log out succesfully" });
+  });
+};

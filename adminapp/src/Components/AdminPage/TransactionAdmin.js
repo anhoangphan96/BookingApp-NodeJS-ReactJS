@@ -7,7 +7,7 @@ import Pagination from "../CardContainer/Pagination";
 
 const TransactionAdmin = () => {
   const urlLocation = useLocation().pathname;
-  console.log(urlLocation);
+
   const [listTrans, setListTrans] = useState([]);
   const getDataTransactionAdmin = async () => {
     //Nếu như ở dashboard sẽ gọi đến api rout transaction adminlast8 (lấy 8 giao dịch mới nhất) còn không thì sẽ lấy full giao dịch
@@ -22,7 +22,7 @@ const TransactionAdmin = () => {
   useEffect(() => {
     getDataTransactionAdmin();
   }, []);
-  console.log(listTrans);
+
   return (
     <>
       {urlLocation === "/" && <h3>Latest Transactions</h3>}
