@@ -1,5 +1,6 @@
 const Hotel = require("../models/Hotel");
 const Room = require("../models/Room");
+const Transaction = require("../models/Transaction");
 
 exports.getListHotel = (req, res, next) => {
   Hotel.find().then((result) => res.status(200).json(result));
@@ -88,9 +89,23 @@ exports.postUpdateHotel = (req, res, next) => {
 
 exports.deleteOneHotel = (req, res, next) => {
   const hotelId = req.body.hotelId;
-  Hotel.findByIdAndDelete(hotelId)
-    .then(() => {
-      res.status(200).json({ message: "Delete succesfully" });
+  //Tìm kiếm transaction đầu tiên có chứa hotel Id nếu có bất kỳ transaction nào liên quan đến hotel sẽ trả về lỗi báo không xóa được
+  Transaction.findOne({ hotel: hotelId })
+    .then((result) => {
+      if (!result) {
+        return Hotel.findByIdAndDelete(hotelId);
+      }
+    })
+    .then((result) => {
+      if (result) {
+        res
+          .status(200)
+          .json({ message: "Delete succesfully!, click Close to see result" });
+      } else {
+        res.status(400).json({
+          message: "Can not Delete. Your Hotel is processing in Transaction",
+        });
+      }
     })
     .catch((err) => console.log(err));
 };

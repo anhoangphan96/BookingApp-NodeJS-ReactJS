@@ -7,6 +7,7 @@ import Pagination from "../Components/CardContainer/Pagination";
 const Hotel = () => {
   const navigate = useNavigate();
   const [listHotel, setListHotel] = useState([]);
+
   const getListHotel = async () => {
     const response = await fetch(`http://localhost:5000/hotel`);
     const data = await response.json();
@@ -15,10 +16,11 @@ const Hotel = () => {
   };
   useEffect(() => {
     getListHotel();
-  });
+  }, []);
   const addnewHotelHandler = () => {
     navigate("/hotel/formhotel?mode=add");
   };
+
   return (
     <div className={styles.hotelListContainer}>
       <div className={styles.title}>
@@ -54,7 +56,11 @@ const Hotel = () => {
           </tr>
           {listHotel.length > 0 &&
             listHotel.map((hotel) => (
-              <HotelItem key={hotel._id} hotel={hotel} />
+              <HotelItem
+                key={hotel._id}
+                hotel={hotel}
+                getListHotel={getListHotel}
+              />
             ))}
           <Pagination listLength={listHotel.length}></Pagination>
         </tbody>
