@@ -20,29 +20,6 @@ const loginSlice = createSlice({
     },
   },
 });
-//initialState và slice cho phần search
-
-const initialStateSearch = {
-  destination: "",
-  date: "",
-  adult: 0,
-  children: 0,
-  room: 0,
-};
-
-const searchSlice = createSlice({
-  name: "search",
-  initialState: initialStateSearch,
-  reducers: {
-    GETSEARCH: (state, action) => {
-      state.destination = action.payload.destination;
-      state.adult = action.payload.adult;
-      state.date = action.payload.date;
-      state.children = action.payload.children;
-      state.room = action.payload.room;
-    },
-  },
-});
 
 //initialState and slice cho phần tính giá trong detail hotel khi chọn rooms
 
@@ -70,11 +47,11 @@ const listRoomSlice = createSlice({
 const store = configureStore({
   reducer: {
     login: loginSlice.reducer,
-    search: searchSlice.reducer,
+
     roomList: listRoomSlice.reducer,
   },
 });
 export const loginActions = loginSlice.actions;
-export const searchActions = searchSlice.actions;
+
 export const roomListActions = listRoomSlice.actions;
 export default store;

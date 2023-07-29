@@ -12,7 +12,7 @@ function App() {
   const dispatch = useDispatch();
   //Nhớ làm cái catch error
   const checkLogin = async () => {
-    const response = await fetch("http://localhost:5000/user", {
+    const response = await fetch("http://localhost:5000/user/checklogin", {
       method: "GET",
       credentials: "include",
       mode: "cors",
@@ -33,7 +33,7 @@ function App() {
       element: <Home></Home>,
     },
     { path: "/search", element: <Search></Search> },
-    { path: "/detail/:id", element: <Detail></Detail> },
+    { path: "/hotel/:id", element: <Detail></Detail> },
     { path: "/user", element: <User></User> },
     { path: "/transaction", element: <Transaction></Transaction> },
   ]);

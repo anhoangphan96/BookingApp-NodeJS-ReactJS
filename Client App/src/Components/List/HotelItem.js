@@ -5,7 +5,7 @@ const HotelItem = function (props) {
   return (
     <div className={styles.hotelItem}>
       <img src={props.image}></img>
-      <a href={`/detail/${props.id}`} className={styles.hotelName}>
+      <a href={`/hotel/${props.id}`} className={styles.hotelName}>
         {props.name}
       </a>
       <span className={styles.hotelCity}>{props.city}</span>

@@ -14,7 +14,7 @@ const HotelDetail = function () {
   const idHotel = params.id;
   const getHotelDetail = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/detail/${idHotel}`, {
+      const response = await fetch(`http://localhost:5000/hotel/${idHotel}`, {
         method: "GET",
         mode: "cors",
         credentials: "include",

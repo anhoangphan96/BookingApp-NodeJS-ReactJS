@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 import styles from "./SearchPopup.module.css";
-import DateRageInput from "../Header/DateRangeInput";
-import { useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 const SearchPopup = function () {
-  const searchData = useSelector((state) => state.search);
-  console.log(searchData);
-  const [destination, setDestination] = useState(searchData.destination);
-  const [date, setDate] = useState(searchData.date);
-  const [adult, setAdult] = useState(searchData.adult);
-  const [children, setChildren] = useState(searchData.children);
-  const [room, setRoom] = useState(searchData.room);
+  const [searchParams] = useSearchParams();
+  const [destination, setDestination] = useState(searchParams.get("des"));
+  const [date, setDate] = useState(searchParams.get("date"));
+  const [adult, setAdult] = useState(searchParams.get("adult"));
+  const [children, setChildren] = useState(searchParams.get("children"));
+  const [room, setRoom] = useState(searchParams.get("room"));
   const destinationChangeHandler = (event) => {
     setDestination(event.target.value);
   };

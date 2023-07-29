@@ -25,7 +25,7 @@ const HotelItem = (props) => {
     setMessage(data.message);
   };
   //Function để show popup confirm delete
-  const deleteShowPopupHandler = () => {
+  const showPopupHandler = () => {
     setShowPopup(true);
   };
   const closeHandler = () => {
@@ -40,7 +40,7 @@ const HotelItem = (props) => {
   const deleteHotelHandler = () => {
     postDeleteHotel();
   };
-  console.log(message);
+
   return (
     <>
       <tr>
@@ -56,7 +56,7 @@ const HotelItem = (props) => {
           <button onClick={editHotelHandler} className={styles.editBtn}>
             Edit
           </button>
-          <button className={styles.deleteBtn} onClick={deleteShowPopupHandler}>
+          <button className={styles.deleteBtn} onClick={showPopupHandler}>
             Delete
           </button>
         </td>

@@ -14,7 +14,7 @@ const Room = () => {
   };
   useEffect(() => {
     getListRoom();
-  });
+  }, []);
   const addnewRoomHandler = () => {
     navigate("/room/formroom?mode=add");
   };
@@ -52,7 +52,9 @@ const Room = () => {
             </th>
           </tr>
           {listRoom.length > 0 &&
-            listRoom.map((room) => <RoomItem key={room._id} room={room} />)}
+            listRoom.map((room) => (
+              <RoomItem key={room._id} room={room} getListRoom={getListRoom} />
+            ))}
           <Pagination listLength={listRoom.length}></Pagination>
         </tbody>
       </table>

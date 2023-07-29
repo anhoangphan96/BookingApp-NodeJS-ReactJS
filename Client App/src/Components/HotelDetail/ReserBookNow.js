@@ -25,7 +25,7 @@ const ReserBookNow = () => {
   const idHotel = params.id;
   const getRoomsAvailable = async (dateRange) => {
     const response = await fetch(
-      `http://localhost:5000/detail/${idHotel}/rooms/available?dateRange=${dateRange}`,
+      `http://localhost:5000/room/available?dateRange=${dateRange}&id=${idHotel}`,
       {
         method: "GET",
         mode: "cors",

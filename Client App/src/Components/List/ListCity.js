@@ -26,7 +26,7 @@ const ListCity = function (props) {
   ]);
   const getDataListCity = async function () {
     try {
-      const response = await fetch("http://localhost:5000/home/listcity", {
+      const response = await fetch("http://localhost:5000/hotel/listcity", {
         method: "GET",
         mode: "cors",
         credentials: "include",

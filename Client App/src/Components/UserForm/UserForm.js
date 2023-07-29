@@ -30,19 +30,22 @@ const UserForm = () => {
   };
   const submitFormHandler = async (event) => {
     event.preventDefault();
-    const response = await fetch(`http://localhost:5000/user?mode=${mode}`, {
-      method: "POST",
-      mode: "cors",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({
-        userName: userName,
-        password: password,
-        fullname: fullname,
-        phone: phone,
-        email: email,
-      }),
-    });
+    const response = await fetch(
+      `http://localhost:5000/user/access?mode=${mode}`,
+      {
+        method: "POST",
+        mode: "cors",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          userName: userName,
+          password: password,
+          fullname: fullname,
+          phone: phone,
+          email: email,
+        }),
+      }
+    );
 
     if (mode === "signup") {
       if (response.ok) {

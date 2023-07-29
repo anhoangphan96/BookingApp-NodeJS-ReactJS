@@ -3,11 +3,9 @@ import styles from "./HeaderSearch.module.css";
 import "font-awesome/css/font-awesome.min.css";
 import DateRageInput from "./DateRangeInput";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { searchActions } from "../../store/store";
+
 const HeaderSearch = (props) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   //Xây dựng các phần tử trong thanh search trên Header
   //2 giá trị State để biết người dùng có đang input hay không, nếu người dùng input thì icon và chữ sẽ màu đen, còn không thì sẽ xám đi
   const [inputWhere, setInputWhere] = useState("");
@@ -43,8 +41,10 @@ const HeaderSearch = (props) => {
       children: Number(inputChildren),
       room: Number(inputRoom),
     };
-    dispatch(searchActions.GETSEARCH(dataSearch));
-    navigate("/search");
+
+    navigate(
+      `/search?des=${inputWhere}&date=${dateRange}&adult=${inputAdult}&children=${inputChildren}&room=${inputRoom}`
+    );
   };
   //JSX trả ra ở component này là 3 ô input gồm icon thẻ inbut và 1 button search
   return (

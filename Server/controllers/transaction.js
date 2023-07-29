@@ -27,6 +27,7 @@ exports.getReserve = (req, res, next) => {
 };
 
 exports.getTransAdminLastest8 = (req, res, next) => {
+  console.log("asd");
   Transaction.find()
     .limit(8)
     .populate("hotel", "name")

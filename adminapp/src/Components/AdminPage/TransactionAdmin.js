@@ -14,7 +14,12 @@ const TransactionAdmin = () => {
     const response = await fetch(
       `http://localhost:5000/transaction/transadmin${
         urlLocation === "/" ? "last8" : ""
-      }`
+      }`,
+      {
+        method: "GET",
+        mode: "cors",
+        credentials: "include",
+      }
     );
     const data = await response.json();
     setListTrans(data);
@@ -59,7 +64,7 @@ const TransactionAdmin = () => {
           </tr>
           {listTrans.length > 0 &&
             listTrans.map((trans, i) => (
-              <TransactionItem transaction={trans} />
+              <TransactionItem transaction={trans} key={trans._id} />
             ))}
           <Pagination listLength={listTrans.length}></Pagination>
         </tbody>

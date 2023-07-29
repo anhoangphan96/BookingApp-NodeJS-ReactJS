@@ -1,27 +1,33 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 
-// initial state and slcie of modal popup
-
-const modalInitialState = {
-  showPopup: false,
+//initialState va slice cho loggin/loggout state
+const initialStateLogin = {
+  isLoggedIn: false,
+  username: "",
+  isAdmin: false,
 };
-const modalSlice = createSlice({
-  name: "modal",
-  initialState: modalInitialState,
+const loginSlice = createSlice({
+  name: "login",
+  initialState: initialStateLogin,
   reducers: {
-    SHOWPOPUP: (state, action) => {
-      state.showPopup = true;
+    LOGIN: (state, action) => {
+      console.log(action);
+      state.isLoggedIn = true;
+      state.username = action.payload.username;
+      state.isAdmin = action.payload.isAdmin;
     },
-    CLOSEPOPUP: (state, action) => {
-      state.showPopup = false;
+    LOGOUT: (state, action) => {
+      state.isLoggedIn = false;
+      state.username = "";
+      state.isAdmin = false;
     },
   },
 });
-export const modalActions = modalSlice.actions;
+export const loginActions = loginSlice.actions;
 
 const store = configureStore({
   reducer: {
-    modal: modalSlice.reducer,
+    login: loginSlice.reducer,
   },
 });
 

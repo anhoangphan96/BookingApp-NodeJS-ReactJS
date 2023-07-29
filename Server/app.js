@@ -6,14 +6,9 @@ const bodyParser = require("body-parser");
 
 const app = express();
 const userRoute = require("./routes/user");
-const checkAuthorController = require("./controllers/checkAuthor");
-const homepageRoute = require("./routes/homepage");
-const searchpageRoute = require("./routes/searchpage");
-const detailRoute = require("./routes/detailpage");
-const useradminRoute = require("./routes/useradmin");
 const transactionRoute = require("./routes/transaction");
-const hoteladminRoute = require("./routes/hoteladmin");
-const roomadminRoute = require("./routes/room");
+const hotelRoute = require("./routes/hotel");
+const roomRoute = require("./routes/room");
 app.use(
   cors({
     origin: ["http://localhost:3000", "http://localhost:3001"],
@@ -34,16 +29,10 @@ app.use(
     },
   })
 );
-
-app.use(userRoute);
-app.use("/home", homepageRoute);
-// app.use(checkAuthorController.checkAuthor);
-app.use("/search", searchpageRoute);
-app.use("/detail", detailRoute);
-app.use("/useradmin", useradminRoute);
+app.use("/user", userRoute);
 app.use("/transaction", transactionRoute);
-app.use("/hotel", hoteladminRoute);
-app.use("/room", roomadminRoute);
+app.use("/hotel", hotelRoute);
+app.use("/room", roomRoute);
 
 mongoose
   .connect(

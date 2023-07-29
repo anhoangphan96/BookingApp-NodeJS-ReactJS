@@ -31,3 +31,10 @@
   border-radius: 4px;
   padding: 10px;
 }
+.erroMessage {
+  font-size: 12px;
+  margin: 0px;
+  color: red;
+  font-style: italic;
+  text-align: right;
+}

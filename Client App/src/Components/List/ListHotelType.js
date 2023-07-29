@@ -37,11 +37,14 @@ const ListHotelType = function (props) {
 
   const getDataListHotelType = async () => {
     try {
-      const response = await fetch("http://localhost:5000/home/listhoteltype", {
-        method: "GET",
-        mode: "cors",
-        credentials: "include",
-      });
+      const response = await fetch(
+        "http://localhost:5000/hotel/listhoteltype",
+        {
+          method: "GET",
+          mode: "cors",
+          credentials: "include",
+        }
+      );
       if (response.status === 401) {
         const errorMessage = await response.json();
         dispatch(loginActions.LOGOUT());

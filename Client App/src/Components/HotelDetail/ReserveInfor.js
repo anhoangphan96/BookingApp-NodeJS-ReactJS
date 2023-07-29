@@ -7,7 +7,7 @@ const ReserveInfor = () => {
   const [userPhone, setUserPhone] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const getDataUser = async () => {
-    const response = await fetch(`http://localhost:5000/detail/userinfor`, {
+    const response = await fetch(`http://localhost:5000/user/infor`, {
       method: "GET",
       mode: "cors",
       credentials: "include",

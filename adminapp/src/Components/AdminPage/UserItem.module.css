@@ -12,3 +12,25 @@
   background-color: #5f3dc4;
   cursor: pointer;
 }
+
+/* --- Style cho phần popup --- */
+.popupbuttons {
+  border-top: 1px solid #7048e8;
+  padding: 8px;
+  display: flex;
+  justify-content: end;
+  gap: 4px;
+}
+.closeBtn {
+  width: 50px;
+  color: #6741d9;
+  background-color: white;
+  border: 1px solid #6741d9;
+  border-radius: 4px;
+  padding: 6px 4px;
+}
+.closeBtn:hover {
+  background-color: #6741d9;
+  color: white;
+  cursor: pointer;
+}
