@@ -14,11 +14,14 @@ const HotelDetail = function () {
   const idHotel = params.id;
   const getHotelDetail = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/hotel/${idHotel}`, {
-        method: "GET",
-        mode: "cors",
-        credentials: "include",
-      });
+      const response = await fetch(
+        `http://localhost:5000/hotel/detail/${idHotel}`,
+        {
+          method: "GET",
+          mode: "cors",
+          credentials: "include",
+        }
+      );
       if (response.status === 401) {
         const errorMessage = await response.json();
         dispatch(loginActions.LOGOUT());

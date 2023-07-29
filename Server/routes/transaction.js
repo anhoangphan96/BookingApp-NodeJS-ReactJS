@@ -11,5 +11,5 @@ router.post("/reserve", transactionController.postReserve);
 //Các route được gọi từ admin app
 router.use(checkAuthorControllers.checkAuthorAdmin);
 router.get("/transadminlast8", transactionController.getTransAdminLastest8);
-router.get("/transadmin", transactionController.getTransAdminLastest8);
+router.get("/transadmin", transactionController.getTransAdminAll);
 module.exports = router;

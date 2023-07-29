@@ -35,7 +35,12 @@ const FormRoom = () => {
   };
   const getDataOneRoom = async () => {
     const response = await fetch(
-      `http://localhost:5000/room/updateroom?id=${idRoom}`
+      `http://localhost:5000/room/updateroom?id=${idRoom}`,
+      {
+        method: "GET",
+        mode: "cors",
+        credentials: "include",
+      }
     );
     const data = await response.json();
     console.log(data);
@@ -45,11 +50,7 @@ const FormRoom = () => {
     setMaxpeopleInput(data.maxPeople);
     setRoomInput(data.roomNumbers.join(","));
   };
-  useEffect(() => {
-    if (mode === "update") {
-      getDataOneRoom();
-    }
-  }, []);
+
   let urlToFetch;
   if (mode === "add") {
     urlToFetch = `http://localhost:5000/room/addroom`;
@@ -77,7 +78,11 @@ const FormRoom = () => {
     }
   };
   const getListHotel = async () => {
-    const response = await fetch(`http://localhost:5000/hotel`);
+    const response = await fetch(`http://localhost:5000/hotel`, {
+      method: "GET",
+      mode: "cors",
+      credentials: "include",
+    });
     const data = await response.json();
     setListHotel(data);
   };
@@ -87,6 +92,9 @@ const FormRoom = () => {
   };
   useEffect(() => {
     getListHotel();
+    if (mode === "update") {
+      getDataOneRoom();
+    }
   }, []);
   return (
     <>

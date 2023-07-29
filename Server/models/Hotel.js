@@ -34,6 +34,7 @@ const hotelSchema = new Schema({
     type: String,
     required: true,
   },
+  //Field này không có yêu cầu trong schema của đề bài nhưng trong database có và sẽ được lấy giá rẻ nhất trong list
   cheapestPrice: {
     type: Number,
     required: true,
@@ -47,7 +48,7 @@ const hotelSchema = new Schema({
     required: true,
   },
   rooms: {
-    type: [{ type: String, ref: "Room" }],
+    type: [{ type: String, ref: "Room", required: true }],
     required: true,
   },
 });

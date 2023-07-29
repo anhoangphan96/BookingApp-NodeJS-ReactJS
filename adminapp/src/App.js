@@ -8,12 +8,14 @@ import FormRoom from "./pages/FormRoom";
 import Transaction from "./pages/Transaction";
 import User from "./pages/User";
 import Login from "./pages/Login";
-
+import { loader as listRoomLoader } from "./pages/Room";
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
       element: <RootLayout></RootLayout>,
+      loader: listRoomLoader,
+      id: "mainroot",
       children: [
         {
           index: true,

@@ -1,8 +1,13 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
+import {
+  useNavigate,
+  useRouteLoaderData,
+  useSearchParams,
+} from "react-router-dom";
 import Card from "../Components/CardContainer/Card";
 import styles from "./FormHotel.module.css";
 import { useEffect, useState } from "react";
 const FormHotel = () => {
+  const listRoom = useRouteLoaderData("mainroot");
   const [searchParams] = useSearchParams();
   const mode = searchParams.get("mode");
   const hotelid = searchParams.get("id");
@@ -16,7 +21,7 @@ const FormHotel = () => {
   const [descInput, setDescInput] = useState("");
   const [priceInput, setPriceInput] = useState("");
   const [pictureInput, setPictureInput] = useState("");
-  const [featuredInput, setFeaturedInput] = useState("");
+  const [featuredInput, setFeaturedInput] = useState(false);
   const [roomInput, setRoomInput] = useState("");
 
   const nameChangeHandler = (event) => {
@@ -54,21 +59,32 @@ const FormHotel = () => {
   };
 
   const getHotelUpdateOne = async () => {
-    const response = await fetch(
-      `http://localhost:5000/hotel/updatehotel?id=${hotelid}`
-    );
-    const data = await response.json();
-    setNameInput(data.name);
-    setTypeInput(data.type);
-    setCityInput(data.city);
-    setAddressInput(data.address);
-    setDistanceInput(data.distance);
-    setTitleInput(data.title);
-    setDescInput(data.desc);
-    setPriceInput(data.cheapestPrice);
-    setPictureInput(data.photos.join("\n"));
-    setFeaturedInput(data.featured);
-    setRoomInput(data.rooms.map((room) => room.title).join("\n"));
+    try {
+      const response = await fetch(
+        `http://localhost:5000/hotel/updatehotel?id=${hotelid}`,
+        {
+          method: "GET",
+          mode: "cors",
+          credentials: "include",
+        }
+      );
+      console.log(response);
+      const data = await response.json();
+      console.log(data);
+      setNameInput(data.name);
+      setTypeInput(data.type);
+      setCityInput(data.city);
+      setAddressInput(data.address);
+      setDistanceInput(data.distance);
+      setTitleInput(data.title);
+      setDescInput(data.desc);
+      setPriceInput(data.cheapestPrice);
+      setPictureInput(data.photos.join("\n"));
+      setFeaturedInput(data.featured);
+      setRoomInput(data.rooms.map((room) => room.title).join("\n"));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
@@ -84,7 +100,6 @@ const FormHotel = () => {
     } else if (mode === "update") {
       urlToFetch = `http://localhost:5000/hotel/updatehotel?id=${hotelid}`;
     }
-    console.log(urlToFetch);
     const response = await fetch(urlToFetch, {
       method: "POST",
       mode: "cors",
@@ -99,7 +114,7 @@ const FormHotel = () => {
         title: titleInput,
         desc: descInput,
         price: Number(priceInput),
-        picture: pictureInput.split("\n"),
+        picture: pictureInput.split("\n").filter((picture) => picture !== ""),
         featured: featuredInput === "true", // set giá trị input từ user thành boolean
         room: roomInput.split("\n"),
       }),
@@ -108,6 +123,21 @@ const FormHotel = () => {
       navigate("/hotel");
     }
   };
+  const calculateCheapestPrice = (e) => {
+    const listArrRoomName = roomInput.split("\n");
+    console.log(listArrRoomName);
+    let listPrice = [];
+    listArrRoomName.forEach((rname) => {
+      const roomFind = listRoom.find((room) => {
+        return room.title === rname;
+      });
+      roomFind && listPrice.push(roomFind.price);
+    });
+    const minPrice = listPrice.length === 0 ? 0 : Math.min(...listPrice);
+    console.log(minPrice);
+    setPriceInput(minPrice);
+  };
+
   const submitSendAddHotel = (event) => {
     event.preventDefault();
     sendDataInputHotel();
@@ -191,11 +221,14 @@ const FormHotel = () => {
             ></input>
           </div>
           <div className={`${styles.inputfield}`}>
-            <label htmlFor="price">Price</label>
+            <label htmlFor="price">
+              Cheapest Price (automatically updated by list rooms)
+            </label>
             <input
+              disabled
               id="price"
               type="number"
-              placeholder="100"
+              placeholder="0"
               onChange={priceChangeHandler}
               value={priceInput}
             ></input>
@@ -207,6 +240,7 @@ const FormHotel = () => {
               type="text"
               onChange={pictureChangeHandler}
               value={pictureInput}
+              placeholder="Seperate url image by Enter"
             ></textarea>
           </div>
           <div className={`${styles.inputfield} ${styles.featuredField}`}>
@@ -216,7 +250,8 @@ const FormHotel = () => {
               onChange={featuredChangeHandler}
               value={featuredInput}
             >
-              <option value="No">No</option>
+              <option value={false}>No</option>
+              <option value={true}>Yes</option>
             </select>
           </div>
           <div className={`${styles.inputfield} ${styles.roomFiled}`}>
@@ -226,6 +261,8 @@ const FormHotel = () => {
               type="text"
               onChange={roomChangeHandler}
               value={roomInput}
+              onBlur={calculateCheapestPrice}
+              placeholder="Seperate room type by Enter"
             ></textarea>
           </div>
           <button className={styles.btnSend}>Send</button>

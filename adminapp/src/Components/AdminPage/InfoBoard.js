@@ -1,11 +1,50 @@
+import { useEffect } from "react";
 import Card from "../CardContainer/Card";
 import styles from "./InfoBoard.module.css";
+import { useState } from "react";
 const InfoBoard = () => {
+  const [userAmount, setUserAmount] = useState(0);
+  const [orderAmount, setOrderAmount] = useState(0);
+  const [earning, setEarning] = useState(0);
+  const [balance, setBalance] = useState(0);
+  const getListUser = async () => {
+    const response = await fetch(`http://localhost:5000/user/listuser`, {
+      method: "GET",
+      mode: "cors",
+      credentials: "include",
+    });
+    const data = await response.json();
+    setUserAmount(data.length);
+  };
+
+  const getDataTransactionAdmin = async () => {
+    //Nếu như ở dashboard sẽ gọi đến api rout transaction adminlast8 (lấy 8 giao dịch mới nhất) còn không thì sẽ lấy full giao dịch
+    const response = await fetch(
+      `http://localhost:5000/transaction/transadmin`,
+      {
+        method: "GET",
+        mode: "cors",
+        credentials: "include",
+      }
+    );
+    const data = await response.json();
+    console.log(data);
+    const totalEarning = data.reduce((total, trans) => total + trans.price, 0);
+    //Tính doanh thu trung bình hằng tháng theo số tháng hiện tại trong năm
+    const monthNumber = new Date().getMonth() + 1;
+    setOrderAmount(data.length);
+    setEarning(totalEarning);
+    setBalance((totalEarning / monthNumber).toFixed(2));
+  };
+  useEffect(() => {
+    getListUser();
+    getDataTransactionAdmin();
+  }, []);
   return (
     <div className={styles.infoBoardContainer}>
       <Card className={styles.inforType}>
         <h3>USERS</h3>
-        <h4>100</h4>
+        <h4>{userAmount}</h4>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className={`icon icon-tabler icon-tabler-user ${styles.iconuser}`}
@@ -23,7 +62,7 @@ const InfoBoard = () => {
       </Card>
       <Card className={styles.inforType}>
         <h3>ORDERS</h3>
-        <h4>100</h4>
+        <h4>{orderAmount}</h4>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className={`icon icon-tabler icon-tabler-shopping-cart ${styles.iconorder}`}
@@ -43,7 +82,7 @@ const InfoBoard = () => {
       </Card>
       <Card className={styles.inforType}>
         <h3>EARNINGS</h3>
-        <h4>$100</h4>
+        <h4>${earning}</h4>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className={`icon icon-tabler icon-tabler-coin ${styles.iconearning}`}
@@ -62,7 +101,7 @@ const InfoBoard = () => {
       </Card>
       <Card className={styles.inforType}>
         <h3>BALANCE</h3>
-        <h4>$100</h4>
+        <h4>${balance}</h4>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className={`icon icon-tabler icon-tabler-wallet ${styles.iconbalance}`}

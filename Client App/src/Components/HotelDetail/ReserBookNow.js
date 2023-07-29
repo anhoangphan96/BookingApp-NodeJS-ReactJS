@@ -112,7 +112,11 @@ const ReserBookNow = () => {
         <h3>Select Rooms</h3>
         <ul className={styles.listRoom}>
           {listRoom.map((room) => (
-            <RoomItem room={room} dayBook={dayBook} key={room._id} />
+            <RoomItem
+              room={room}
+              dayBook={dayBook}
+              key={room._id + dateFormatted}
+            />
           ))}
         </ul>
       </div>

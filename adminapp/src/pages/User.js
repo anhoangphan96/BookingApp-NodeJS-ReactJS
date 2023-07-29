@@ -6,7 +6,11 @@ import UserItem from "../Components/AdminPage/UserItem";
 const User = () => {
   const [listUser, setListUser] = useState([]);
   const getListUser = async () => {
-    const response = await fetch(`http://localhost:5000/user/listuser`);
+    const response = await fetch(`http://localhost:5000/user/listuser`, {
+      method: "GET",
+      mode: "cors",
+      credentials: "include",
+    });
     const data = await response.json();
     setListUser(data);
   };

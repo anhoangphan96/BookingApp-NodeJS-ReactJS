@@ -1,9 +1,9 @@
 import { useDispatch } from "react-redux";
 import styles from "./RoomItem.module.css";
 import { roomListActions } from "../../store/store";
+import { useEffect, useRef } from "react";
 const RoomItem = (props) => {
   const dispatch = useDispatch();
-
   const chooseRomHandler = (event) => {
     if (event.target.checked) {
       dispatch(
@@ -21,6 +21,10 @@ const RoomItem = (props) => {
       );
     }
   };
+  useEffect(() => {
+    dispatch(roomListActions.clearRoom());
+  }, [props.dateranges]);
+
   return (
     <li className={styles.inforContainer}>
       <div>

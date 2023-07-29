@@ -7,7 +7,11 @@ const Room = () => {
   const navigate = useNavigate();
   const [listRoom, setListRoom] = useState([]);
   const getListRoom = async () => {
-    const response = await fetch(`http://localhost:5000/room`);
+    const response = await fetch(`http://localhost:5000/room`, {
+      method: "GET",
+      credentials: "include",
+      mode: "cors",
+    });
     const data = await response.json();
     setListRoom(data);
     console.log(data);
@@ -62,3 +66,12 @@ const Room = () => {
   );
 };
 export default Room;
+
+export async function loader() {
+  const response = await fetch(`http://localhost:5000/room`, {
+    method: "GET",
+    credentials: "include",
+    mode: "cors",
+  });
+  return response;
+}

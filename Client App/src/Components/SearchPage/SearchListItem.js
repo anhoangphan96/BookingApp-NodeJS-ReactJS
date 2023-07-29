@@ -8,7 +8,7 @@ const SearchListItem = function (props) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
   const seeDetailHandler = () => {
-    navigate(`/detail/${props.id}`);
+    navigate(`/hotel/${props.id}`);
   };
   //2 Biến string để sử dụng hiển thị cho deal được cancel free hay không trong các khách sạn
   const cancel = "Free cancellation";
@@ -28,7 +28,9 @@ const SearchListItem = function (props) {
       </div>
       <div className={styles.moreInfors}>
         <div className={styles.rateandtext}>
-          <span className={styles.ratetext}>{props.rate.toFixed(1)}</span>
+          <span className={styles.ratetext}>
+            {props.rate ? props.rate.toFixed(1) : "0.0"}
+          </span>
         </div>
         <div className={styles.priceandbook}>
           <span className={styles.price}>${props.price}</span>

@@ -200,7 +200,7 @@ exports.postUpdateHotel = (req, res, next) => {
     .then((result) => {
       res.status(200).json({ message: "Add new hotel successfully!" });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {});
 };
 
 exports.deleteOneHotel = (req, res, next) => {

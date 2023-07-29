@@ -41,6 +41,10 @@ const listRoomSlice = createSlice({
       );
       state.totalPrice -= action.payload.price;
     },
+    clearRoom: (state, action) => {
+      state.roomsSelected = [];
+      state.totalPrice = 0;
+    },
   },
 });
 

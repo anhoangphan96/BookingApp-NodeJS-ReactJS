@@ -25,7 +25,10 @@
   border-bottom: 1px solid black;
   padding: 6px;
 }
-
+.inputfield > textarea {
+  font-family: inherit;
+  padding: 6px;
+}
 .featuredField {
   align-items: start;
 }
@@ -45,4 +48,8 @@
   padding: 8px 48px;
   border: none;
   font-size: 12px;
+}
+.btnSend:hover {
+  opacity: 0.7;
+  cursor: pointer;
 }
