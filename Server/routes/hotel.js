@@ -9,8 +9,7 @@ router.get("/listhoteltype", hotelControllers.getListHotelType);
 router.get("/listhotel", hotelControllers.getListHotelTopRate);
 
 //----3 route đầu user không check author vì user sẽ có thể vào homepage để xem listcity, listtypehotel, listhotel-toprate
-// router.use(checkAuthorControllers.checkAuthorUser);
-
+router.use(checkAuthorControllers.checkAuthorUser);
 router.post("/search", hotelControllers.postSearchData);
 router.get("/detail/:id", hotelControllers.getDetailData);
 

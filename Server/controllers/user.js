@@ -7,18 +7,40 @@ exports.userAccess = (req, res, next) => {
   const phone = req.body.phone;
   const email = req.body.email;
   const mode = req.query.mode;
-  if (mode === "signup") {
-    const newUser = new User({
-      username: username,
-      password: password,
-      fullName: fullname,
-      phoneNumber: phone,
-      email: email,
-      isAdmin: false,
-    });
-    newUser.save();
-    res.status(200).json({ message: "Sign up successfully" });
-  } else if (mode === "login") {
+  let noError = true;
+  const errorInput = {
+    userName: "",
+    password: "",
+    fullname: "",
+    phone: "",
+    email: "",
+  };
+  for (let data in req.body) {
+    if (!req.body[data]) {
+      noError = false;
+      errorInput[data] = `Please input for ${data.toLocaleLowerCase()} field`;
+    }
+  }
+  if (mode === "signup" && noError) {
+    User.findOne({ username: username })
+      .then((result) => {
+        if (!result) {
+          const newUser = new User({
+            username: username,
+            password: password,
+            fullName: fullname,
+            phoneNumber: phone,
+            email: email,
+            isAdmin: false,
+          });
+          newUser.save();
+          res.status(200).json({ message: "Sign up successfully" });
+        } else {
+          res.status(409).json({ message: "This username has been existing" });
+        }
+      })
+      .catch((err) => console.log(err));
+  } else if (mode === "login" && noError) {
     User.find({ username: username, password: password })
       .then((user) => {
         if (user.length > 0) {
@@ -34,13 +56,14 @@ exports.userAccess = (req, res, next) => {
               .end();
           });
         } else {
-          res.status(400).json({
-            message:
-              "Your account does not exist. Please check your username or password",
+          res.status(401).json({
+            message: "Your username or password is incorrect",
           });
         }
       })
       .catch((err) => console.log(err));
+  } else {
+    res.status(400).json(errorInput);
   }
 };
 exports.checkLogin = (req, res, next) => {
