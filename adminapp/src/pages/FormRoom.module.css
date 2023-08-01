@@ -25,6 +25,9 @@
   border-bottom: 1px solid black;
   padding: 6px;
 }
+.inputfield > textarea {
+  font-family: inherit;
+}
 .lastRow {
   display: flex;
   grid-column: 1/3;

@@ -3,9 +3,11 @@ import styles from "./Hotel.module.css";
 import HotelItem from "../Components/AdminPage/HotelItem";
 import { useNavigate } from "react-router-dom";
 import Pagination from "../Components/CardContainer/Pagination";
-
+import { useDispatch } from "react-redux";
+import { loginActions } from "../store/reduxstore";
 const Hotel = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [listHotel, setListHotel] = useState([]);
 
   const getListHotel = async () => {
@@ -14,6 +16,10 @@ const Hotel = () => {
       credentials: "include",
       mode: "cors",
     });
+    if (response.status === 401) {
+      dispatch(loginActions.LOGOUT());
+      navigate("/login");
+    }
     const data = await response.json();
     setListHotel(data);
     console.log(data);

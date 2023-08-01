@@ -40,75 +40,88 @@ exports.getListHotelTopRate = (req, res, next) => {
 };
 
 exports.postSearchData = (req, res, next) => {
-  const city = req.body.destination;
-  const [startDate, endDate] = req.body.date.trim().split("-");
-  const maxPeople = req.body.adult + req.body.children;
-  const roomAmount = req.body.room;
-  Promise.all([
-    Hotel.find({ city: city }).populate("rooms"),
-    Transaction.find({
-      $or: [
-        {
-          dateStart: {
-            $gte: convertDateHandler(startDate),
-            $lte: convertDateHandler(endDate),
+  let error = "Please back to seach bar and input for";
+  let hasError = false;
+  for (let property in req.body) {
+    //Nếu như data của các thuộc tính trong thanh search (trừ children) không được input thì sẽ trả về message lỗi
+    if (!req.body[property] && property !== "children") {
+      hasError = true;
+      error = `${error} ${property.toLowerCase()},`;
+    }
+  }
+  if (!hasError) {
+    const city = req.body.destination;
+    const [startDate, endDate] = req.body.date.trim().split("-");
+    const maxPeople = req.body.adult + req.body.children;
+    const roomAmount = req.body.room;
+    Promise.all([
+      Hotel.find({ city: city }).populate("rooms"),
+      Transaction.find({
+        $or: [
+          {
+            dateStart: {
+              $gte: convertDateHandler(startDate),
+              $lte: convertDateHandler(endDate),
+            },
           },
-        },
-        {
-          dateEnd: {
-            $gte: convertDateHandler(startDate),
-            $lte: convertDateHandler(endDate),
+          {
+            dateEnd: {
+              $gte: convertDateHandler(startDate),
+              $lte: convertDateHandler(endDate),
+            },
           },
-        },
-        {
-          dateStart: { $lte: convertDateHandler(startDate) },
-          dateEnd: { $gte: convertDateHandler(endDate) },
-        },
-      ],
-    }),
-  ])
-    .then((result) => {
-      const [hotels, transactions] = result;
+          {
+            dateStart: { $lte: convertDateHandler(startDate) },
+            dateEnd: { $gte: convertDateHandler(endDate) },
+          },
+        ],
+      }),
+    ])
+      .then((result) => {
+        const [hotels, transactions] = result;
 
-      const hotelMatch = hotels.filter((hotel) => {
-        //Tim list room đã bị book trong khoảng ngày search
-        const listRoomBooked = [];
-        //Lọc qua các transaction tìm ra transaction có trùng id hotel kiểm tra phòng trong transaction có bị book chưa nếu rồi thì push vào array để lát loại trừ ra
-        transactions.forEach((trans) => {
-          if (trans.hotel.toString() === hotel._id.toString()) {
-            trans.room.forEach((room) => {
-              if (!listRoomBooked.includes(room)) {
-                listRoomBooked.push(room);
-              }
-            });
-          }
-          return listRoomBooked;
+        const hotelMatch = hotels.filter((hotel) => {
+          //Tim list room đã bị book trong khoảng ngày search
+          const listRoomBooked = [];
+          //Lọc qua các transaction tìm ra transaction có trùng id hotel kiểm tra phòng trong transaction có bị book chưa nếu rồi thì push vào array để lát loại trừ ra
+          transactions.forEach((trans) => {
+            if (trans.hotel.toString() === hotel._id.toString()) {
+              trans.room.forEach((room) => {
+                if (!listRoomBooked.includes(room)) {
+                  listRoomBooked.push(room);
+                }
+              });
+            }
+            return listRoomBooked;
+          });
+          //Tính capacity của room trong khoảng ngày nếu trong transaction có phòng đặt của hotel thì lấy tổng capacity - ra số đã đặt
+          //Chỉ cần capacity không đáp ứng 1 ngày trong khoảng ngày search cũng là không đáp ứng điều kiện
+          const roomCapacity =
+            hotel.rooms.reduce((totalRoom, room) => {
+              return totalRoom + room.roomNumbers.length;
+            }, 0) - listRoomBooked.length;
+
+          //Tính toán số người tối đa trong khoảng ngày search của khách sạn
+          //dùng hàm reducer trả về totalPeople = tổng qua từng element lấy maxPeople của room * tổng số room còn lại chưa bị book
+          const peopleCapacity = hotel.rooms.reduce((totalPeople, room) => {
+            return (
+              totalPeople +
+              room.maxPeople *
+                room.roomNumbers.filter(
+                  (roomnum) => !listRoomBooked.includes(roomnum)
+                ).length
+            );
+          }, 0);
+
+          return roomCapacity >= roomAmount && peopleCapacity >= maxPeople;
         });
-        //Tính capacity của room trong khoảng ngày nếu trong transaction có phòng đặt của hotel thì lấy tổng capacity - ra số đã đặt
-        //Chỉ cần capacity không đáp ứng 1 ngày trong khoảng ngày search cũng là không đáp ứng điều kiện
-        const roomCapacity =
-          hotel.rooms.reduce((totalRoom, room) => {
-            return totalRoom + room.roomNumbers.length;
-          }, 0) - listRoomBooked.length;
-
-        //Tính toán số người tối đa trong khoảng ngày search của khách sạn
-        //dùng hàm reducer trả về totalPeople = tổng qua từng element lấy maxPeople của room * tổng số room còn lại chưa bị book
-        const peopleCapacity = hotel.rooms.reduce((totalPeople, room) => {
-          return (
-            totalPeople +
-            room.maxPeople *
-              room.roomNumbers.filter(
-                (roomnum) => !listRoomBooked.includes(roomnum)
-              ).length
-          );
-        }, 0);
-
-        return roomCapacity >= roomAmount && peopleCapacity >= maxPeople;
-      });
-      return hotelMatch;
-    })
-    .then((result) => res.status(200).json(result))
-    .catch((err) => console.log(err));
+        return hotelMatch;
+      })
+      .then((result) => res.status(200).json(result))
+      .catch((err) => console.log(err));
+  } else {
+    res.status(400).json(error.slice(0, -1)); //slice ở đây để bỏ đi dấu phẩy ở cuối cùng
+  }
 };
 
 exports.getDetailData = (req, res, next) => {
@@ -121,39 +134,73 @@ exports.getDetailData = (req, res, next) => {
 exports.getListHotel = (req, res, next) => {
   Hotel.find().then((result) => res.status(200).json(result));
 };
+//Viết function để validate data input của người dùng cho cả hàm tạo và update hotel
+const validate = (reqbody) => {
+  const errorInput = {
+    name: "",
+    type: "",
+    city: "",
+    address: "",
+    distance: "",
+    title: "",
+    desc: "",
+    picture: "",
+    room: "",
+  };
+  let hasError = false;
+  for (let property in errorInput) {
+    if (
+      typeof reqbody[property] === "object" &&
+      reqbody[property].length === 0
+    ) {
+      hasError = true;
+      errorInput[property] = `Please input at least one ${property}`;
+    } else if (!reqbody[property]) {
+      hasError = true;
+      errorInput[property] = `Please input for ${property}`;
+    }
+  }
+  return { hasError: hasError, errorInput: errorInput };
+};
+
 exports.postAddHotel = (req, res, next) => {
-  const name = req.body.name;
-  const type = req.body.type;
-  const city = req.body.city;
-  const address = req.body.address;
-  const distance = req.body.distance;
-  const title = req.body.title;
-  const desc = req.body.desc;
-  const price = req.body.price;
-  const picture = req.body.picture;
-  const featured = req.body.featured;
-  Room.find({ title: { $in: req.body.room } })
-    .select("_id")
-    .then((result) => {
-      const newHotel = new Hotel({
-        name: name,
-        type: type,
-        city: city,
-        address: address,
-        distance: distance,
-        title: title,
-        photos: picture,
-        desc: desc,
-        cheapestPrice: price,
-        featured: featured,
-        rooms: result.map((room) => room._id.toString()),
-      });
-      return newHotel.save();
-    })
-    .then((result) => {
-      res.status(200).json({ message: "Add new hotel successfully!" });
-    })
-    .catch((err) => console.log(err));
+  const validateInput = validate(req.body);
+  if (!validateInput.hasError) {
+    const name = req.body.name;
+    const type = req.body.type;
+    const city = req.body.city;
+    const address = req.body.address;
+    const distance = req.body.distance;
+    const title = req.body.title;
+    const desc = req.body.desc;
+    const price = req.body.price;
+    const picture = req.body.picture;
+    const featured = req.body.featured;
+    Room.find({ title: { $in: req.body.room } })
+      .select("_id")
+      .then((result) => {
+        const newHotel = new Hotel({
+          name: name,
+          type: type,
+          city: city,
+          address: address,
+          distance: distance,
+          title: title,
+          photos: picture,
+          desc: desc,
+          cheapestPrice: price,
+          featured: featured,
+          rooms: result.map((room) => room._id.toString()),
+        });
+        return newHotel.save();
+      })
+      .then((result) => {
+        res.status(200).json({ message: "Add new hotel successfully!" });
+      })
+      .catch((err) => console.log(err));
+  } else {
+    res.status(400).json(validateInput.errorInput);
+  }
 };
 
 exports.getHotelOne = (req, res, next) => {
@@ -167,40 +214,45 @@ exports.getHotelOne = (req, res, next) => {
 };
 
 exports.postUpdateHotel = (req, res, next) => {
-  const hotelId = req.query.id;
-  const nameUpdated = req.body.name;
-  const typeUpdated = req.body.type;
-  const cityUpdated = req.body.city;
-  const addressUpdated = req.body.address;
-  const distanceUpdated = req.body.distance;
-  const titleUpdated = req.body.title;
-  const descUpdated = req.body.desc;
-  const priceUpdated = req.body.price;
-  const pictureUpdated = req.body.picture;
-  const featuredUpdated = req.body.featured;
-  Room.find({ title: { $in: req.body.room } })
-    .select("_id")
-    .then((result) => {
-      const updatedHotel = {
-        name: nameUpdated,
-        type: typeUpdated,
-        city: cityUpdated,
-        address: addressUpdated,
-        distance: distanceUpdated,
-        title: titleUpdated,
-        photos: pictureUpdated,
-        photos: pictureUpdated,
-        desc: descUpdated,
-        cheapestPrice: priceUpdated,
-        featured: featuredUpdated,
-        rooms: result.map((room) => room._id.toString()),
-      };
-      return Hotel.findByIdAndUpdate(hotelId, updatedHotel, { new: true });
-    })
-    .then((result) => {
-      res.status(200).json({ message: "Add new hotel successfully!" });
-    })
-    .catch((err) => {});
+  const validateInput = validate(req.body);
+  if (!validateInput.hasError) {
+    const hotelId = req.query.id;
+    const nameUpdated = req.body.name;
+    const typeUpdated = req.body.type;
+    const cityUpdated = req.body.city;
+    const addressUpdated = req.body.address;
+    const distanceUpdated = req.body.distance;
+    const titleUpdated = req.body.title;
+    const descUpdated = req.body.desc;
+    const priceUpdated = req.body.price;
+    const pictureUpdated = req.body.picture;
+    const featuredUpdated = req.body.featured;
+    Room.find({ title: { $in: req.body.room } })
+      .select("_id")
+      .then((result) => {
+        const updatedHotel = {
+          name: nameUpdated,
+          type: typeUpdated,
+          city: cityUpdated,
+          address: addressUpdated,
+          distance: distanceUpdated,
+          title: titleUpdated,
+          photos: pictureUpdated,
+          photos: pictureUpdated,
+          desc: descUpdated,
+          cheapestPrice: priceUpdated,
+          featured: featuredUpdated,
+          rooms: result.map((room) => room._id.toString()),
+        };
+        return Hotel.findByIdAndUpdate(hotelId, updatedHotel, { new: true });
+      })
+      .then((result) => {
+        res.status(200).json({ message: "Add new hotel successfully!" });
+      })
+      .catch((err) => {});
+  } else {
+    res.status(400).json(validateInput.errorInput);
+  }
 };
 
 exports.deleteOneHotel = (req, res, next) => {

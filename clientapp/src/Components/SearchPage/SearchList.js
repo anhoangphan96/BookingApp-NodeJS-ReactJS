@@ -9,6 +9,7 @@ const SearchList = function () {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchList, setSearchList] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("No Hotel found");
   const postSearchData = async () => {
     try {
       const response = await fetch(`http://localhost:5000/hotel/search`, {
@@ -25,10 +26,11 @@ const SearchList = function () {
         }),
       });
       if (response.status === 401) {
-        const errorMessage = await response.json();
         dispatch(loginActions.LOGOUT());
         navigate("/user?mode=login");
-        throw new Error(errorMessage.message);
+      } else if (response.status === 400) {
+        const errorText = await response.json();
+        setErrorMessage(errorText);
       }
       const data = await response.json();
       setSearchList(data);
@@ -44,7 +46,7 @@ const SearchList = function () {
   return (
     <div className={styles.searchList}>
       {searchList.length === 0 && (
-        <h3 className={styles.message}>No Hotel Found!</h3>
+        <h3 className={styles.message}>{errorMessage}</h3>
       )}
       {searchList.map((item) => (
         <SearchListItem

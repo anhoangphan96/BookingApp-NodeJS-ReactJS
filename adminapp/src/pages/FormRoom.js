@@ -2,8 +2,11 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import Card from "../Components/CardContainer/Card";
 import styles from "./FormRoom.module.css";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { loginActions } from "../store/reduxstore";
 const FormRoom = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const mode = searchParams.get("mode");
   const idRoom = searchParams.get("id");
@@ -42,8 +45,11 @@ const FormRoom = () => {
         credentials: "include",
       }
     );
+    if (response.status === 401) {
+      dispatch(loginActions.LOGOUT());
+      navigate("/login");
+    }
     const data = await response.json();
-    console.log(data);
     setTitleInput(data.title);
     setDescInput(data.desc);
     setPriceInput(data.price);

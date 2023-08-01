@@ -6,12 +6,15 @@ import {
 import Card from "../Components/CardContainer/Card";
 import styles from "./FormHotel.module.css";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { loginActions } from "../store/reduxstore";
 const FormHotel = () => {
   const listRoom = useRouteLoaderData("mainroot");
   const [searchParams] = useSearchParams();
   const mode = searchParams.get("mode");
   const hotelid = searchParams.get("id");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [nameInput, setNameInput] = useState("");
   const [typeInput, setTypeInput] = useState("");
   const [cityInput, setCityInput] = useState("");
@@ -68,7 +71,10 @@ const FormHotel = () => {
           credentials: "include",
         }
       );
-      console.log(response);
+      if (response.status === 401) {
+        dispatch(loginActions.LOGOUT());
+        navigate("/login");
+      }
       const data = await response.json();
       console.log(data);
       setNameInput(data.name);
@@ -116,16 +122,18 @@ const FormHotel = () => {
         price: Number(priceInput),
         picture: pictureInput.split("\n").filter((picture) => picture !== ""),
         featured: featuredInput === "true", // set giá trị input từ user thành boolean
-        room: roomInput.split("\n"),
+        room: roomInput.split("\n").filter((picture) => picture !== ""),
       }),
     });
     if (response.ok) {
       navigate("/hotel");
+    } else if (response.status === 400) {
+      const errorInput = await response.json();
+      console.log(errorInput);
     }
   };
   const calculateCheapestPrice = (e) => {
     const listArrRoomName = roomInput.split("\n");
-    console.log(listArrRoomName);
     let listPrice = [];
     listArrRoomName.forEach((rname) => {
       const roomFind = listRoom.find((room) => {
@@ -134,7 +142,6 @@ const FormHotel = () => {
       roomFind && listPrice.push(roomFind.price);
     });
     const minPrice = listPrice.length === 0 ? 0 : Math.min(...listPrice);
-    console.log(minPrice);
     setPriceInput(minPrice);
   };
 

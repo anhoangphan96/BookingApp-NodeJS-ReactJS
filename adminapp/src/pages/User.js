@@ -3,14 +3,23 @@ import styles from "./User.module.css";
 import { useState, useEffect } from "react";
 import Pagination from "../Components/CardContainer/Pagination";
 import UserItem from "../Components/AdminPage/UserItem";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { loginActions } from "../store/reduxstore";
 const User = () => {
   const [listUser, setListUser] = useState([]);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const getListUser = async () => {
     const response = await fetch(`http://localhost:5000/user/listuser`, {
       method: "GET",
       mode: "cors",
       credentials: "include",
     });
+    if (response.status === 401) {
+      dispatch(loginActions.LOGOUT());
+      navigate("/login");
+    }
     const data = await response.json();
     setListUser(data);
   };

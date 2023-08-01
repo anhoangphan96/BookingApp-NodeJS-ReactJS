@@ -49,3 +49,8 @@
   opacity: 0.7;
   cursor: pointer;
 }
+.methodAndBook > p {
+  color: red;
+  font-style: italic;
+  font-size: 12px;
+}

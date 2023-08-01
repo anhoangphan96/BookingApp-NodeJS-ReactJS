@@ -1,7 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./SideBar.module.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { loginActions } from "../../store/reduxstore";
 const SideBar = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
   const clickToLogout = async () => {
     const response = await fetch(`http://localhost:5000/user/adminlogout`, {
@@ -10,7 +13,10 @@ const SideBar = () => {
       mode: "cors",
       headers: { "Content-Type": "application/json" },
     });
-    console.log(await response.json());
+    if (response.ok) {
+      dispatch(loginActions.LOGOUT());
+      navigate("/login");
+    }
   };
 
   const logoutHandler = () => {

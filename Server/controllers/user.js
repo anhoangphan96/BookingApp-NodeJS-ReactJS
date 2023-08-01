@@ -134,6 +134,8 @@ exports.checkLoginAdmin = (req, res, next) => {
       username: req.session.username,
       isAdmin: req.session.isAdmin,
     });
+  } else {
+    res.status(401).json({ message: "Unauthorized!" });
   }
 };
 exports.getListUser = (req, res, next) => {

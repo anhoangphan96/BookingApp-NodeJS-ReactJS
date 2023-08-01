@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import Card from "../CardContainer/Card";
 import styles from "./TransactionAdmin.module.css";
 import TransactionItem from "./TransactionItem";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Pagination from "../CardContainer/Pagination";
-
+import { useDispatch } from "react-redux";
+import { loginActions } from "../../store/reduxstore";
 const TransactionAdmin = () => {
   const urlLocation = useLocation().pathname;
-
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [listTrans, setListTrans] = useState([]);
   const getDataTransactionAdmin = async () => {
     //Nếu như ở dashboard sẽ gọi đến api rout transaction adminlast8 (lấy 8 giao dịch mới nhất) còn không thì sẽ lấy full giao dịch
@@ -21,6 +23,10 @@ const TransactionAdmin = () => {
         credentials: "include",
       }
     );
+    if (response.status === 401) {
+      dispatch(loginActions.LOGOUT());
+      navigate("/login");
+    }
     const data = await response.json();
     setListTrans(data);
   };

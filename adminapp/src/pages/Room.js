@@ -3,8 +3,11 @@ import styles from "./Room.module.css";
 import { useNavigate } from "react-router-dom";
 import RoomItem from "../Components/AdminPage/RoomItem";
 import Pagination from "../Components/CardContainer/Pagination";
+import { useDispatch } from "react-redux";
+import { loginActions } from "../store/reduxstore";
 const Room = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [listRoom, setListRoom] = useState([]);
   const getListRoom = async () => {
     const response = await fetch(`http://localhost:5000/room`, {
@@ -12,6 +15,10 @@ const Room = () => {
       credentials: "include",
       mode: "cors",
     });
+    if (response.status === 401) {
+      dispatch(loginActions.LOGOUT());
+      navigate("/login");
+    }
     const data = await response.json();
     setListRoom(data);
     console.log(data);

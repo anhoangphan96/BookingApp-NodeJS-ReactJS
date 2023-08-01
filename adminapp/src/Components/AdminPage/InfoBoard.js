@@ -2,7 +2,12 @@ import { useEffect } from "react";
 import Card from "../CardContainer/Card";
 import styles from "./InfoBoard.module.css";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginActions } from "../../store/reduxstore";
 const InfoBoard = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [userAmount, setUserAmount] = useState(0);
   const [orderAmount, setOrderAmount] = useState(0);
   const [earning, setEarning] = useState(0);
@@ -27,14 +32,22 @@ const InfoBoard = () => {
         credentials: "include",
       }
     );
-    const data = await response.json();
-    console.log(data);
-    const totalEarning = data.reduce((total, trans) => total + trans.price, 0);
-    //Tính doanh thu trung bình hằng tháng theo số tháng hiện tại trong năm
-    const monthNumber = new Date().getMonth() + 1;
-    setOrderAmount(data.length);
-    setEarning(totalEarning);
-    setBalance((totalEarning / monthNumber).toFixed(2));
+    if (response.status === 401) {
+      dispatch(loginActions.LOGOUT());
+      navigate("/login");
+    } else {
+      const data = await response.json();
+      console.log(data);
+      const totalEarning = data.reduce(
+        (total, trans) => total + trans.price,
+        0
+      );
+      //Tính doanh thu trung bình hằng tháng theo số tháng hiện tại trong năm
+      const monthNumber = new Date().getMonth() + 1;
+      setOrderAmount(data.length);
+      setEarning(totalEarning);
+      setBalance((totalEarning / monthNumber).toFixed(2));
+    }
   };
   useEffect(() => {
     getListUser();

@@ -14,6 +14,7 @@ const ReserBookNow = () => {
   const params = useParams();
   const [dateFormatted, setDateFormatted] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
+  const [errorInput, setErrorInput] = useState("");
   const [dayBook, setDayBook] = useState(0);
   const [ranges, setRanges] = useState([
     {
@@ -87,11 +88,13 @@ const ReserBookNow = () => {
         payMethod: paymentMethod,
       }),
     });
-    if (response.ok) {
+    if (response.status === 400) {
+      const error = await response.json();
+      setErrorInput(error);
+    } else {
       navigate("/transaction");
     }
   };
-  console.log(listRoom);
   return (
     <form className={styles.formBook} onSubmit={reserveNowHandler}>
       <div className={styles.dateandinfor}>
@@ -129,6 +132,7 @@ const ReserBookNow = () => {
             <option value="cash">Cash</option>
           </select>
           <button className={styles.reserveBtn}>Reserve Now</button>
+          {errorInput && <p>{errorInput}</p>}
         </div>
       </div>
     </form>
