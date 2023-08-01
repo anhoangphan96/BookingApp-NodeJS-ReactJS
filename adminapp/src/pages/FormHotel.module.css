@@ -29,6 +29,13 @@
   font-family: inherit;
   padding: 6px;
 }
+.inputfield > p {
+  /* --- style cho các lỗi input */
+  font-size: 12px;
+  font-style: italic;
+  text-align: right;
+  color: red;
+}
 .featuredField {
   align-items: start;
 }

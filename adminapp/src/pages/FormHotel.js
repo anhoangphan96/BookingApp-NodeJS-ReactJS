@@ -22,10 +22,21 @@ const FormHotel = () => {
   const [distanceInput, setDistanceInput] = useState("");
   const [titleInput, setTitleInput] = useState("");
   const [descInput, setDescInput] = useState("");
-  const [priceInput, setPriceInput] = useState("");
+  const [priceInput, setPriceInput] = useState(0);
   const [pictureInput, setPictureInput] = useState("");
   const [featuredInput, setFeaturedInput] = useState(false);
   const [roomInput, setRoomInput] = useState("");
+  const [errorInput, setErrorInput] = useState({
+    name: "",
+    type: "",
+    city: "",
+    address: "",
+    distance: "",
+    title: "",
+    desc: "",
+    picture: "",
+    room: "",
+  });
 
   const nameChangeHandler = (event) => {
     setNameInput(event.target.value);
@@ -129,7 +140,7 @@ const FormHotel = () => {
       navigate("/hotel");
     } else if (response.status === 400) {
       const errorInput = await response.json();
-      console.log(errorInput);
+      setErrorInput(errorInput);
     }
   };
   const calculateCheapestPrice = (e) => {
@@ -166,6 +177,7 @@ const FormHotel = () => {
               onChange={nameChangeHandler}
               value={nameInput}
             ></input>
+            {errorInput.name && <p>{errorInput.name}</p>}
           </div>
           <div className={`${styles.inputfield}`}>
             <label htmlFor="type">Type</label>
@@ -176,6 +188,7 @@ const FormHotel = () => {
               onChange={typeChangeHandler}
               value={typeInput}
             ></input>
+            {errorInput.type && <p>{errorInput.type}</p>}
           </div>
           <div className={`${styles.inputfield}`}>
             <label htmlFor="city">City</label>
@@ -186,6 +199,7 @@ const FormHotel = () => {
               onChange={cityChangeHandler}
               value={cityInput}
             ></input>
+            {errorInput.city && <p>{errorInput.city}</p>}
           </div>
           <div className={`${styles.inputfield}`}>
             <label htmlFor="address">Adress</label>
@@ -196,6 +210,7 @@ const FormHotel = () => {
               onChange={addressChangeHandler}
               value={addressInput}
             ></input>
+            {errorInput.address && <p>{errorInput.address}</p>}
           </div>
           <div className={`${styles.inputfield}`}>
             <label htmlFor="distance">Distance from City Center(m)</label>
@@ -206,6 +221,7 @@ const FormHotel = () => {
               onChange={distanceChangeHandler}
               value={distanceInput}
             ></input>
+            {errorInput.distance && <p>{errorInput.distance}</p>}
           </div>
           <div className={`${styles.inputfield}`}>
             <label htmlFor="title">Title</label>
@@ -216,6 +232,7 @@ const FormHotel = () => {
               onChange={titleChangeHandler}
               value={titleInput}
             ></input>
+            {errorInput.title && <p>{errorInput.title}</p>}
           </div>
           <div className={`${styles.inputfield}`}>
             <label htmlFor="description">Description</label>
@@ -226,6 +243,7 @@ const FormHotel = () => {
               onChange={descChangeHandler}
               value={descInput}
             ></input>
+            {errorInput.desc && <p>{errorInput.desc}</p>}
           </div>
           <div className={`${styles.inputfield}`}>
             <label htmlFor="price">
@@ -249,6 +267,7 @@ const FormHotel = () => {
               value={pictureInput}
               placeholder="Seperate url image by Enter"
             ></textarea>
+            {errorInput.picture && <p>{errorInput.picture}</p>}
           </div>
           <div className={`${styles.inputfield} ${styles.featuredField}`}>
             <label htmlFor="featured">Featured</label>
@@ -271,6 +290,7 @@ const FormHotel = () => {
               onBlur={calculateCheapestPrice}
               placeholder="Seperate room type by Enter"
             ></textarea>
+            {errorInput.room && <p>{errorInput.room}</p>}
           </div>
           <button className={styles.btnSend}>Send</button>
         </form>
