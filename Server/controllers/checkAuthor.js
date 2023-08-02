@@ -1,5 +1,5 @@
 const User = require("../models/User");
-
+//Check author của toàn bộ user là phải đang đăng nhập
 exports.checkAuthorUser = (req, res, next) => {
   if (req.session.isLoggedIn) {
     next();

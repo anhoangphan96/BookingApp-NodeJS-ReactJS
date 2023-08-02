@@ -1,6 +1,9 @@
 const Transaction = require("../models/Transaction");
 const dateFormat = require("../utils/convertDate");
+
+//Tạo một transaction mới
 exports.postReserve = (req, res, next) => {
+  //Kiểm tra lúc book phòng user có lỗi gì không
   let error = "";
   let errorRoom = "";
   let hasError = false;
@@ -38,14 +41,14 @@ exports.postReserve = (req, res, next) => {
     res.status(400).json(error);
   }
 };
-
+//Lấy list transaction theo username
 exports.getReserve = (req, res, next) => {
   const username = req.session.username;
   Transaction.find({ user: username })
     .populate("hotel", "name")
     .then((result) => res.status(200).json(result));
 };
-
+//Lấy 8 transaction mới nhất sort theo field createdAt
 exports.getTransAdminLastest8 = (req, res, next) => {
   Transaction.find()
     .sort({ createdAt: -1 })
@@ -53,6 +56,8 @@ exports.getTransAdminLastest8 = (req, res, next) => {
     .populate("hotel", "name")
     .then((result) => res.status(200).json(result));
 };
+
+//Lấy toàn bộ transaction để display cho admin
 exports.getTransAdminAll = (req, res, next) => {
   Transaction.find()
     .sort({ createdAt: -1 })

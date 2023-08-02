@@ -28,6 +28,14 @@
 .inputfield > textarea {
   font-family: inherit;
 }
+.inputfield > p {
+  /* --- style cho các lỗi input */
+  margin: 0px;
+  font-size: 12px;
+  font-style: italic;
+  text-align: right;
+  color: red;
+}
 .lastRow {
   display: flex;
   grid-column: 1/3;

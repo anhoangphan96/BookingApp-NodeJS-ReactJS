@@ -31,6 +31,7 @@
 }
 .inputfield > p {
   /* --- style cho các lỗi input */
+  margin: 0px;
   font-size: 12px;
   font-style: italic;
   text-align: right;

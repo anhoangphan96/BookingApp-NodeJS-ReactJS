@@ -2,6 +2,8 @@ const Hotel = require("../models/Hotel");
 const Room = require("../models/Room");
 const Transaction = require("../models/Transaction");
 const convertDateHandler = require("../utils/convertDate");
+
+//Lấy List city
 exports.getListCity = (req, res, next) => {
   Promise.all([Hotel.distinct("city"), Hotel.find()]).then((result) => {
     //Tạo ra listcity gồm các giá trị city duy nhất trong database cùng với số khách sạn trong từng city
@@ -14,7 +16,7 @@ exports.getListCity = (req, res, next) => {
     return res.status(200).json(listCity);
   });
 };
-
+//Lấy list hotel type
 exports.getListHotelType = (req, res, next) => {
   Promise.all([Hotel.distinct("type"), Hotel.find()]).then((result) => {
     //Tạo ra listtype gồm các giá trị type duy nhất trong database cùng với số khách sạn trong theo từng type
@@ -27,7 +29,7 @@ exports.getListHotelType = (req, res, next) => {
     return res.status(200).json(listHotelType);
   });
 };
-
+//Lấy ra 3 hotel có rate cao nhất
 exports.getListHotelTopRate = (req, res, next) => {
   Hotel.find()
     .then((result) => {
@@ -39,7 +41,9 @@ exports.getListHotelTopRate = (req, res, next) => {
     .catch((err) => console.log(err));
 };
 
+//Search để lấy khách sạn đáp ứng tiêu chí search
 exports.postSearchData = (req, res, next) => {
+  //logic xử lý khi user input không đủ data để search
   let error = "Please back to seach bar and input for";
   let hasError = false;
   for (let property in req.body) {
@@ -49,11 +53,14 @@ exports.postSearchData = (req, res, next) => {
       error = `${error} ${property.toLowerCase()},`;
     }
   }
+
+  //Nếu như user input đủ thông tin và không có lỗi thì bắt đầu search
   if (!hasError) {
     const city = req.body.destination;
     const [startDate, endDate] = req.body.date.trim().split("-");
     const maxPeople = req.body.adult + req.body.children;
     const roomAmount = req.body.room;
+    //Tìm ra hotel theo city yêu cầu, xem có trùng với các transaction đang book trong khoảng ngày yêu cầu không
     Promise.all([
       Hotel.find({ city: city }).populate("rooms"),
       Transaction.find({
@@ -124,13 +131,14 @@ exports.postSearchData = (req, res, next) => {
   }
 };
 
+//Lấy data chi tiết của 1 hotel
 exports.getDetailData = (req, res, next) => {
   const idHotel = req.params.id;
   Hotel.findById(idHotel).then((result) => {
     res.status(200).json(result);
   });
 };
-
+//Lấy toàn bộ list hotel
 exports.getListHotel = (req, res, next) => {
   Hotel.find().then((result) => res.status(200).json(result));
 };
@@ -148,6 +156,7 @@ const validate = (reqbody) => {
     room: "",
   };
   let hasError = false;
+  //Do có 2 loại data là String và Array nên chia ra 2 trường hợp để xử lý lỗi
   for (let property in errorInput) {
     if (
       typeof reqbody[property] === "object" &&
@@ -163,7 +172,9 @@ const validate = (reqbody) => {
   return { hasError: hasError, errorInput: errorInput };
 };
 
+//Thêm mới 1 hotel
 exports.postAddHotel = (req, res, next) => {
+  //Validate data xem input đủ không nếu đủ thì tiếp tục k thì trả về lỗi 400
   const validateInput = validate(req.body);
   if (!validateInput.hasError) {
     const name = req.body.name;
@@ -176,6 +187,7 @@ exports.postAddHotel = (req, res, next) => {
     const price = req.body.price;
     const picture = req.body.picture;
     const featured = req.body.featured;
+    //Tìm các Room mà user input (user bắt buộc phải thuộc title của các room) sau khi tìm ra thì tạo biến và gọi hàm tạo hotel, lưu vào database theo schema
     Room.find({ title: { $in: req.body.room } })
       .select("_id")
       .then((result) => {
@@ -203,6 +215,7 @@ exports.postAddHotel = (req, res, next) => {
   }
 };
 
+//Lấy data của 1 hotel để display ở form update
 exports.getHotelOne = (req, res, next) => {
   const hotelid = req.query.id;
   Hotel.findById(hotelid)
@@ -213,6 +226,7 @@ exports.getHotelOne = (req, res, next) => {
     .catch((err) => console.log(err));
 };
 
+//Update 1 hotel logic giống với logic tạo mới chỉ là dựa trên data mà user sửa lại
 exports.postUpdateHotel = (req, res, next) => {
   const validateInput = validate(req.body);
   if (!validateInput.hasError) {
@@ -247,14 +261,14 @@ exports.postUpdateHotel = (req, res, next) => {
         return Hotel.findByIdAndUpdate(hotelId, updatedHotel, { new: true });
       })
       .then((result) => {
-        res.status(200).json({ message: "Add new hotel successfully!" });
+        res.status(200).json({ message: "Update hotel successfully!" });
       })
       .catch((err) => {});
   } else {
     res.status(400).json(validateInput.errorInput);
   }
 };
-
+//Xóa 1 hotel
 exports.deleteOneHotel = (req, res, next) => {
   const hotelId = req.body.hotelId;
   //Tìm kiếm transaction đầu tiên có chứa hotel Id nếu có bất kỳ transaction nào liên quan đến hotel sẽ trả về lỗi báo không xóa được

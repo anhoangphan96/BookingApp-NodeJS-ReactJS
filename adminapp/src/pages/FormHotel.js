@@ -137,6 +137,17 @@ const FormHotel = () => {
       }),
     });
     if (response.ok) {
+      setErrorInput({
+        name: "",
+        type: "",
+        city: "",
+        address: "",
+        distance: "",
+        title: "",
+        desc: "",
+        picture: "",
+        room: "",
+      });
       navigate("/hotel");
     } else if (response.status === 400) {
       const errorInput = await response.json();

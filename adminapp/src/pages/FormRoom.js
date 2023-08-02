@@ -18,6 +18,14 @@ const FormRoom = () => {
   const [roomInput, setRoomInput] = useState("");
   const [hotelInput, setHotelInput] = useState("");
   const [listHotel, setListHotel] = useState([]);
+  const [errorInput, setErrorInput] = useState({
+    title: "",
+    price: "",
+    maxPeople: "",
+    desc: "",
+    room: "",
+    hotel: "",
+  });
   const titleChangeHandler = (event) => {
     setTitleInput(event.target.value);
   };
@@ -49,12 +57,14 @@ const FormRoom = () => {
       dispatch(loginActions.LOGOUT());
       navigate("/login");
     }
+
     const data = await response.json();
     setTitleInput(data.title);
     setDescInput(data.desc);
     setPriceInput(data.price);
     setMaxpeopleInput(data.maxPeople);
     setRoomInput(data.roomNumbers.join(","));
+    setHotelInput(data.hotel);
   };
 
   let urlToFetch;
@@ -75,12 +85,25 @@ const FormRoom = () => {
         desc: descInput,
         price: Number(priceInput),
         maxPeople: Number(maxpeopleInput),
-        room: roomInput.split(",").map((room) => Number(room)), // nhận và chuyển đổi các room thành array number of room
+        room: roomInput
+          .split(",")
+          .map((room) => Number(room))
+          .filter((rnum) => rnum !== 0), // nhận và chuyển đổi các room thành array number of room (loại bỏ rnum =0)
         hotel: hotelInput, //Mặc dù để tên hotel nhưng truyền value hotelId vào backend
       }),
     });
     if (response.ok) {
+      setErrorInput({
+        title: "",
+        price: "",
+        maxPeople: "",
+        desc: "",
+        room: "",
+        hotel: "",
+      });
       navigate("/room");
+    } else if (response.status === 400) {
+      setErrorInput(await response.json());
     }
   };
   const getListHotel = async () => {
@@ -89,8 +112,10 @@ const FormRoom = () => {
       mode: "cors",
       credentials: "include",
     });
-    const data = await response.json();
-    setListHotel(data);
+    if (response.ok) {
+      const data = await response.json();
+      setListHotel(data);
+    }
   };
   const submitSendAddRoom = (event) => {
     event.preventDefault();
@@ -118,6 +143,7 @@ const FormRoom = () => {
               onChange={titleChangeHandler}
               value={titleInput}
             ></input>
+            {errorInput.title && <p>{errorInput.title}</p>}
           </div>
           <div className={`${styles.inputfield}`}>
             <label htmlFor="description">Description</label>
@@ -128,6 +154,7 @@ const FormRoom = () => {
               onChange={descChangeHandler}
               value={descInput}
             ></input>
+            {errorInput.desc && <p>{errorInput.desc}</p>}
           </div>
           <div className={`${styles.inputfield}`}>
             <label htmlFor="price">Price</label>
@@ -138,6 +165,7 @@ const FormRoom = () => {
               onChange={priceChangeHandler}
               value={priceInput}
             ></input>
+            {errorInput.price && <p>{errorInput.price}</p>}
           </div>
 
           <div className={`${styles.inputfield}`}>
@@ -149,6 +177,7 @@ const FormRoom = () => {
               onChange={maxpeopleChangeHandler}
               value={maxpeopleInput}
             ></input>
+            {errorInput.maxPeople && <p>{errorInput.maxPeople}</p>}
           </div>
           <div className={styles.lastRow}>
             <div className={`${styles.inputfield} ${styles.roomFiled}`}>
@@ -160,20 +189,26 @@ const FormRoom = () => {
                 value={roomInput}
                 placeholder="give comma between room numbers"
               ></textarea>
+              {errorInput.room && <p>{errorInput.room}</p>}
             </div>
-            <div className={`${styles.inputfield} ${styles.hotelField}`}>
-              <label htmlFor="hotel">Choose a hotel</label>
-              <select
-                id="hotel"
-                onChange={hotelChangeHandler}
-                value={hotelInput}
-              >
-                <option value="">Please select Hotel</option>
-                {listHotel.map((hotel) => (
-                  <option value={hotel._id}>{hotel.name}</option>
-                ))}
-              </select>
-            </div>
+            {mode === "add" && (
+              <div className={`${styles.inputfield} ${styles.hotelField}`}>
+                <label htmlFor="hotel">Choose a hotel</label>
+                <select
+                  id="hotel"
+                  onChange={hotelChangeHandler}
+                  value={hotelInput}
+                >
+                  <option value="">Please select Hotel</option>
+                  {listHotel.map((hotel) => (
+                    <option value={hotel._id} key={hotel._id}>
+                      {hotel.name}
+                    </option>
+                  ))}
+                </select>
+                {errorInput.hotel && <p>{errorInput.hotel}</p>}
+              </div>
+            )}
             <button className={styles.btnSend}>Send</button>
           </div>
         </form>

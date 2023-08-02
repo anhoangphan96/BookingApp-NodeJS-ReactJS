@@ -2,43 +2,80 @@ const Hotel = require("../models/Hotel");
 const Room = require("../models/Room");
 const Transaction = require("../models/Transaction");
 const convertDateHandler = require("../utils/convertDate");
+//Lấy toàn bộ room
 exports.getListRoom = (req, res, next) => {
   Room.find()
     .then((result) => res.status(200).json(result))
     .catch((err) => console.log(err));
 };
-exports.addNewRoom = (req, res, next) => {
-  const title = req.body.title;
-  const price = req.body.price;
-  const maxPeople = req.body.maxPeople;
-  const desc = req.body.desc;
-  const roomNumbers = req.body.room;
-  const hotelId = req.body.hotel;
-  const newRoom = new Room({
-    title: title,
-    price: price,
-    maxPeople: maxPeople,
-    desc: desc,
-    roomNumbers: roomNumbers,
-  });
-  newRoom
-    .save()
-    .then((result) => {
-      const roomID = result._id.toString();
-      return Hotel.findOneAndUpdate(
-        { _id: hotelId },
-        { $push: { rooms: roomID } },
-        { new: true } // trả về bản ghi và kết quả mới update
-      );
-    })
-    .then((result) => {
-      return res.status(200).json({ message: "Add room successfully!" });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+//Viết function để validate data input của người dùng cho cả hàm tạo và update hotel
+const validate = (reqbody) => {
+  const errorInput = {
+    title: "",
+    price: "",
+    maxPeople: "",
+    desc: "",
+    room: "",
+    hotel: "",
+  };
+  let hasError = false;
+  for (let property in reqbody) {
+    if (
+      typeof reqbody[property] === "object" &&
+      reqbody[property].length === 0
+    ) {
+      hasError = true;
+      errorInput[
+        property
+      ] = `Please input at least one ${property.toLowerCase()}`;
+    } else if (!reqbody[property]) {
+      hasError = true;
+      errorInput[property] = `Please input for ${property.toLowerCase()}`;
+    }
+  }
+  return { hasError: hasError, errorInput: errorInput };
 };
 
+//thêm 1 room mới
+exports.addNewRoom = (req, res, next) => {
+  //Validate data input của user xem đủ field k
+  const validateInput = validate(req.body);
+  if (!validateInput.hasError) {
+    const title = req.body.title;
+    const price = req.body.price;
+    const maxPeople = req.body.maxPeople;
+    const desc = req.body.desc;
+    const roomNumbers = req.body.room;
+    const hotelId = req.body.hotel;
+    const newRoom = new Room({
+      title: title,
+      price: price,
+      maxPeople: maxPeople,
+      desc: desc,
+      roomNumbers: roomNumbers,
+    });
+    newRoom
+      .save()
+      //Sau khi tạo room thì phải thêm room vào khách sạn vừa chọn ở frontend
+      .then((result) => {
+        const roomID = result._id.toString();
+        return Hotel.findOneAndUpdate(
+          { _id: hotelId },
+          { $push: { rooms: roomID } },
+          { new: true } // trả về bản ghi và kết quả mới update
+        );
+      })
+      .then((result) => {
+        return res.status(200).json({ message: "Add room successfully!" });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  } else {
+    res.status(400).json(validateInput.errorInput);
+  }
+};
+//Lấy thông tin của 1 room để display vào form
 exports.getOneRoom = (req, res, next) => {
   const roomId = req.query.id;
   Room.findById(roomId).then((result) => {
@@ -46,41 +83,39 @@ exports.getOneRoom = (req, res, next) => {
   });
 };
 
+//Logic update 1 room
 exports.updateOneRoom = (req, res, next) => {
-  const roomId = req.query.id;
-  const titleUpdated = req.body.title;
-  const priceUpdated = req.body.price;
-  const maxPeopleUpdated = req.body.maxPeople;
-  const descUpdated = req.body.desc;
-  const roomNumbersUpdated = req.body.room;
-  const hotelId = req.body.hotel; // Đối với phần hotelId này thì có thể sử dụng làm công cụ thêm 1 loại phòng mới vào khách sạn
-  const roomDataUpdated = {
-    title: titleUpdated,
-    price: priceUpdated,
-    maxPeople: maxPeopleUpdated,
-    desc: descUpdated,
-    roomNumbers: roomNumbersUpdated,
-  };
+  //Validate data input của user xem đủ field k, nếu đủ thì tiến hành update
+  const validateInput = validate(req.body);
 
-  Room.findByIdAndUpdate(roomId, roomDataUpdated, { new: true })
-    .then((result) => {
-      if (hotelId) {
-        const roomID = result._id.toString();
-        return Hotel.findOneAndUpdate(
-          { _id: hotelId },
-          { $push: { rooms: roomID } },
-          { new: true } // trả về bản ghi và kết quả mới update
-        );
-      } else return result;
-    })
-    .then((result) => {
-      return res.status(200).json({ message: "Add room successfully!" });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  //Ở phần update sẽ không có field hotel vì schema vốn dĩ không có hotel, và 1 room type có thể add vào nhiều hotel
+  if (!validateInput.hasError) {
+    const roomId = req.query.id;
+    const titleUpdated = req.body.title;
+    const priceUpdated = req.body.price;
+    const maxPeopleUpdated = req.body.maxPeople;
+    const descUpdated = req.body.desc;
+    const roomNumbersUpdated = req.body.room;
+    const roomDataUpdated = {
+      title: titleUpdated,
+      price: priceUpdated,
+      maxPeople: maxPeopleUpdated,
+      desc: descUpdated,
+      roomNumbers: roomNumbersUpdated,
+    };
+    //Update room bằng data mới nhất
+    Room.findByIdAndUpdate(roomId, roomDataUpdated, { new: true })
+      .then((result) => {
+        return res.status(200).json({ message: "Update room successfully!" });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  } else {
+    res.status(400).json(validateInput.errorInput);
+  }
 };
-
+//Xóa đi 1 room với điều kiện room đó đang k bị book trong transaction
 exports.deleteOneRoom = (req, res, next) => {
   const roomId = req.body.roomId;
   Hotel.find({ rooms: { $in: [roomId] } })
@@ -121,9 +156,11 @@ exports.deleteOneRoom = (req, res, next) => {
     .catch((err) => console.log(err));
 };
 
+//Lấy danh sách room còn trống để display cho user chọn khi book phòng
 exports.getRoomAvailable = (req, res, next) => {
   const idHotel = req.query.id;
   const [startDate, endDate] = req.query.dateRange.trim().split("-");
+  //Tìm ra hotel và transaction theo idhotel và trong khoảng ngày user chọn
   Promise.all([
     Hotel.findById(idHotel).populate("rooms"),
     Transaction.find({
@@ -148,6 +185,7 @@ exports.getRoomAvailable = (req, res, next) => {
       ],
     }),
   ])
+    //Sau đó so sánh room trong hotel đang được chọn với room đã book trong transaction để loại ra
     .then((result) => {
       const [hotel, transactions] = result;
       const listRoomBooked = [];
@@ -158,6 +196,7 @@ exports.getRoomAvailable = (req, res, next) => {
           }
         });
       });
+      //Trả về list room available để frontend xử lý display cho user
       const listRoomId = hotel.rooms;
       const roomsAvailable = listRoomId.map((room) => {
         const updateRoom = { ...room }._doc;
