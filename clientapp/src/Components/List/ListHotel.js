@@ -14,9 +14,10 @@ const ListHotel = function (props) {
         method: "GET",
         mode: "cors",
         credentials: "include",
+
       });
       const data = await response.json();
-      console.log(data);
+
       setListHotel((prev) => {
         return data.map((hotel) => {
           return {

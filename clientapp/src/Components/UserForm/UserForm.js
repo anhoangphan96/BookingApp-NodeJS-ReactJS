@@ -81,15 +81,14 @@ const UserForm = () => {
           return { ...prev, userName: error.message };
         });
       }
-    }
-    if (mode === "signup") {
-      if (response.ok) {
+    } else {
+      if (mode === "signup") {
         navigate("/user?mode=login");
+      } else if (mode === "login") {
+        const data = await response.json();
+        dispatch(loginActions.LOGIN({ username: data.username }));
+        navigate("/");
       }
-    } else if (mode === "login") {
-      const data = await response.json();
-      dispatch(loginActions.LOGIN({ username: data.username }));
-      navigate("/");
     }
   };
   return (

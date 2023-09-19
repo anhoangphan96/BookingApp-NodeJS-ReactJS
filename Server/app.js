@@ -1,6 +1,7 @@
 //Khai báo các biến lấy thư viện, route, app  cần dùng
 const mongoose = require("mongoose");
 const express = require("express");
+require("dotenv").config();
 const session = require("express-session");
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -12,7 +13,12 @@ const roomRoute = require("./routes/room");
 //Config cors
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:3001"],
+    origin: [
+      process.env.CLIENT_APP_LOCAL,
+      process.env.CLIENT_APP_FIREBASE,
+      process.env.ADMIN_APP_LOCAL,
+      process.env.ADMIN_APP_FIREBASE,
+    ],
     method: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
     credentials: true,
   })

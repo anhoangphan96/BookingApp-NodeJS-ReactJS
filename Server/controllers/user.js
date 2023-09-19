@@ -70,7 +70,8 @@ exports.userAccess = (req, res, next) => {
         }
       })
       .catch((err) => console.log(err));
-  } else { //Lỗi 400 user input không đủ field
+  } else {
+    //Lỗi 400 user input không đủ field
     res.status(400).json(errorInput);
   }
 };
@@ -91,7 +92,7 @@ exports.logout = (req, res, next) => {
   });
 };
 
-//Lấy thông tin của 1 user bằng cách query vào mongodb 
+//Lấy thông tin của 1 user bằng cách query vào mongodb
 exports.getUserData = (req, res, next) => {
   const username = req.session.username;
   User.find({ username: username })
@@ -158,8 +159,7 @@ exports.checkLoginAdmin = (req, res, next) => {
   }
 };
 
-
-//Lấy list user 
+//Lấy list user
 exports.getListUser = (req, res, next) => {
   User.find()
     .then((result) => {
@@ -174,7 +174,6 @@ exports.logout = (req, res, next) => {
     res.status(200).json({ message: "Log out succesfully" });
   });
 };
-
 
 //Set 1 user thành admin
 exports.setToAdmin = (req, res, next) => {

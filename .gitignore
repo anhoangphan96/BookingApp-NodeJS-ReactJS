@@ -1,0 +1,4 @@
+Server/node_modules
+clientapp/node_modules
+adminapp/node_modules
+jsonconfig.json
