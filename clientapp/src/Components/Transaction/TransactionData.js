@@ -12,7 +12,7 @@ const TransactionData = () => {
   const getTransactionData = async () => {
     try {
       const response = await fetch(
-        `${process.env.backend_url}/transaction/data`,
+        `${process.env.REACT_APP_BACKEND_URL}/transaction/data`,
         {
           method: "GET",
           mode: "cors",

@@ -26,7 +26,7 @@ const ReserBookNow = () => {
   const idHotel = params.id;
   const getRoomsAvailable = async (dateRange) => {
     const response = await fetch(
-      `${process.env.BACKEND_URL}/room/available?dateRange=${dateRange}&id=${idHotel}`,
+      `${process.env.REACT_APP_BACKEND_URL}/room/available?dateRange=${dateRange}&id=${idHotel}`,
       {
         method: "GET",
         mode: "cors",
@@ -76,7 +76,7 @@ const ReserBookNow = () => {
   const reserveNowHandler = async (event) => {
     event.preventDefault();
     const response = await fetch(
-      `${process.env.BACKEND_URL}/transaction/reserve`,
+      `${process.env.REACT_APP_BACKEND_URL}/transaction/reserve`,
       {
         method: "POST",
         mode: "cors",

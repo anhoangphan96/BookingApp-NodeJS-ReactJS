@@ -7,11 +7,14 @@ const ReserveInfor = () => {
   const [userPhone, setUserPhone] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const getDataUser = async () => {
-    const response = await fetch(`${process.env.BACKEND_URL}/user/infor`, {
-      method: "GET",
-      mode: "cors",
-      credentials: "include",
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/user/infor`,
+      {
+        method: "GET",
+        mode: "cors",
+        credentials: "include",
+      }
+    );
     const data = await response.json();
     console.log(data);
     setUserName(data.username);

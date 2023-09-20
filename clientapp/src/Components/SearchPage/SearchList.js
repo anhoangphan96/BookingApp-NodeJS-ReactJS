@@ -12,19 +12,22 @@ const SearchList = function () {
   const [errorMessage, setErrorMessage] = useState("No Hotel found");
   const postSearchData = async () => {
     try {
-      const response = await fetch(`${process.env.backend_url}/hotel/search`, {
-        method: "POST",
-        mode: "cors",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({
-          destination: searchParams.get("des"),
-          date: searchParams.get("date"),
-          adult: Number(searchParams.get("adult")),
-          children: Number(searchParams.get("children")),
-          room: Number(searchParams.get("room")),
-        }),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/hotel/search`,
+        {
+          method: "POST",
+          mode: "cors",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({
+            destination: searchParams.get("des"),
+            date: searchParams.get("date"),
+            adult: Number(searchParams.get("adult")),
+            children: Number(searchParams.get("children")),
+            room: Number(searchParams.get("room")),
+          }),
+        }
+      );
       if (response.status === 401) {
         dispatch(loginActions.LOGOUT());
         navigate("/user?mode=login");

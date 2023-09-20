@@ -8,7 +8,7 @@ const SideBar = () => {
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
   const clickToLogout = async () => {
     const response = await fetch(
-      `${process.env.BACKEND_URL}/user/adminlogout`,
+      `${process.env.REACT_APP_BACKEND_URL}/user/adminlogout`,
       {
         method: "POST",
         credentials: "include",

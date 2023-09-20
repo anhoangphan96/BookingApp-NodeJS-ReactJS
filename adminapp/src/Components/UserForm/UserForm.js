@@ -17,16 +17,19 @@ const UserForm = () => {
   };
   const submitFormHandler = async (event) => {
     event.preventDefault();
-    const response = await fetch(`${process.env.BACKEND_URL}/user/adminlogin`, {
-      method: "POST",
-      mode: "cors",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({
-        userName: userName,
-        password: password,
-      }),
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/user/adminlogin`,
+      {
+        method: "POST",
+        mode: "cors",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          userName: userName,
+          password: password,
+        }),
+      }
+    );
     if (!response.ok) {
       const error = await response.json();
       setErrorMessage(error.message);

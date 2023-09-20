@@ -60,7 +60,7 @@ const UserForm = () => {
       };
     }
     const response = await fetch(
-      `${process.env.backend_url}/user/access?mode=${mode}`,
+      `${process.env.REACT_APP_BACKEND_URL}/user/access?mode=${mode}`,
       {
         method: "POST",
         mode: "cors",

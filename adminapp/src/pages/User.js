@@ -1,5 +1,5 @@
 import Card from "../Components/CardContainer/Card";
-import styles from "./User.module.css";
+import styles from "./UserList.module.css";
 import { useState, useEffect } from "react";
 import Pagination from "../Components/CardContainer/Pagination";
 import UserItem from "../Components/AdminPage/UserItem";
@@ -11,11 +11,14 @@ const User = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const getListUser = async () => {
-    const response = await fetch(`${process.env.BACKEND_URL}/user/listuser`, {
-      method: "GET",
-      mode: "cors",
-      credentials: "include",
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/user/listuser`,
+      {
+        method: "GET",
+        mode: "cors",
+        credentials: "include",
+      }
+    );
     if (response.status === 401) {
       dispatch(loginActions.LOGOUT());
       navigate("/login");

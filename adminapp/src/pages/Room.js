@@ -10,7 +10,7 @@ const Room = () => {
   const dispatch = useDispatch();
   const [listRoom, setListRoom] = useState([]);
   const getListRoom = async () => {
-    const response = await fetch(`${process.env.BACKEND_URL}/room`, {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/room`, {
       method: "GET",
       credentials: "include",
       mode: "cors",
@@ -75,7 +75,7 @@ const Room = () => {
 export default Room;
 
 export async function loader() {
-  const response = await fetch(`${process.env.BACKEND_URL}/room`, {
+  const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/room`, {
     method: "GET",
     credentials: "include",
     mode: "cors",

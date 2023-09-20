@@ -75,7 +75,7 @@ const FormHotel = () => {
   const getHotelUpdateOne = async () => {
     try {
       const response = await fetch(
-        `${process.env.BACKEND_URL}/hotel/updatehotel?id=${hotelid}`,
+        `${process.env.REACT_APP_BACKEND_URL}/hotel/updatehotel?id=${hotelid}`,
         {
           method: "GET",
           mode: "cors",
@@ -113,9 +113,9 @@ const FormHotel = () => {
   const sendDataInputHotel = async () => {
     let urlToFetch;
     if (mode === "add") {
-      urlToFetch = `${process.env.BACKEND_URL}/hotel/addhotel`;
+      urlToFetch = `${process.env.REACT_APP_BACKEND_URL}/hotel/addhotel`;
     } else if (mode === "update") {
-      urlToFetch = `${process.env.BACKEND_URL}/hotel/updatehotel?id=${hotelid}`;
+      urlToFetch = `${process.env.REACT_APP_BACKEND_URL}/hotel/updatehotel?id=${hotelid}`;
     }
     const response = await fetch(urlToFetch, {
       method: "POST",

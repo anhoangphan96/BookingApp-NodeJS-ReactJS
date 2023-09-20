@@ -54,12 +54,15 @@ const Navbar = (props) => {
     setnavbarArr(navbarArrChange);
   };
   const postLogout = async () => {
-    const response = await fetch(`${process.env.backend_url}/user/logout`, {
-      method: "POST",
-      mode: "cors",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/user/logout`,
+      {
+        method: "POST",
+        mode: "cors",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      }
+    );
     if (response.ok) {
       dispatch(loginActions.LOGOUT());
     }

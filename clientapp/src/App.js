@@ -14,7 +14,7 @@ function App() {
   const checkLogin = async () => {
     try {
       const response = await fetch(
-        `${process.env.BACKEND_URL}/user/checklogin`,
+        `${process.env.REACT_APP_BACKEND_URL}/user/checklogin`,
         {
           method: "GET",
           credentials: "include",

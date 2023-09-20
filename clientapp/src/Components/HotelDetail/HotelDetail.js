@@ -15,7 +15,7 @@ const HotelDetail = function () {
   const getHotelDetail = async () => {
     try {
       const response = await fetch(
-        `${process.env.BACKEND_URL}/hotel/detail/${idHotel}`,
+        `${process.env.REACT_APP_BACKEND_URL}/hotel/detail/${idHotel}`,
         {
           method: "GET",
           mode: "cors",

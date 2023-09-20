@@ -12,9 +12,9 @@ A Website to book accomodations for travelling. This website contains: Home page
 
 \*Note: Please open link back-end first.
 
-- Back-end demo (Render) : [Link](#)
-- Client app (Firebase) : [Link](#)
-- Admin demo (Firebase) : [Link](#)
+- Back-end demo (Render) : [Link](https://bookingapp-be.onrender.com/)
+- Client app (Firebase) : [Link](https://client-bookingapp.web.app/transaction)
+- Admin demo (Firebase) : [Link](https://admin-bookingapp.web.app)
 
 - Client-role Account: `username: labi89` , `password: asdasd`
 - Admin-role Account: `username: alan96` , `password: asdasd`

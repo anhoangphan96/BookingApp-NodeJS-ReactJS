@@ -11,7 +11,7 @@ const Hotel = () => {
   const [listHotel, setListHotel] = useState([]);
 
   const getListHotel = async () => {
-    const response = await fetch(`${process.env.BACKEND_URL}/hotel`, {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/hotel`, {
       method: "GET",
       credentials: "include",
       mode: "cors",

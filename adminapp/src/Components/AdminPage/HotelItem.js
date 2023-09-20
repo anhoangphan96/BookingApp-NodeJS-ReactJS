@@ -14,7 +14,7 @@ const HotelItem = (props) => {
   };
   const postDeleteHotel = async () => {
     const response = await fetch(
-      `${process.env.BACKEND_URL}/hotel/deletehotel`,
+      `${process.env.REACT_APP_BACKEND_URL}/hotel/deletehotel`,
       {
         method: "POST",
         mode: "cors",

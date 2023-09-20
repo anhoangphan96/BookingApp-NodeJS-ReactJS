@@ -6,13 +6,16 @@ const UserItem = (props) => {
   const [message, setMessage] = useState("");
   const userType = props.user.isAdmin ? "Admin" : "User";
   const postSetAdmin = async () => {
-    const response = await fetch(`${process.env.BACKEND_URL}/user/setadmin`, {
-      method: "POST",
-      mode: "cors",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId: props.user._id }),
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/user/setadmin`,
+      {
+        method: "POST",
+        mode: "cors",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: props.user._id }),
+      }
+    );
     const messageRes = await response.json();
     setMessage(messageRes.message);
   };

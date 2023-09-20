@@ -11,13 +11,16 @@ const RoomItem = (props) => {
     navigate(`/room/formroom?mode=update&id=${props.room._id}`);
   };
   const postDeleteRoom = async () => {
-    const response = await fetch(`${process.env.BACKEND_URL}/room/deleteroom`, {
-      method: "POST",
-      mode: "cors",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ roomId: props.room._id }),
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/room/deleteroom`,
+      {
+        method: "POST",
+        mode: "cors",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ roomId: props.room._id }),
+      }
+    );
     setshowDeleteBtn(false);
     const data = await response.json();
     setMessage(data.message);

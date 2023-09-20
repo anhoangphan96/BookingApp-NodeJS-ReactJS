@@ -11,7 +11,7 @@ const RootLayout = () => {
   const checkLogin = async () => {
     try {
       const response = await fetch(
-        `${process.env.BACKEND_URL}/user/checkloginadmin`,
+        `${process.env.REACT_APP_BACKEND_URL}/user/checkloginadmin`,
         {
           method: "GET",
           credentials: "include",

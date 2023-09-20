@@ -27,7 +27,7 @@ const ListCity = function (props) {
   const getDataListCity = async function () {
     try {
       const response = await fetch(
-        `${process.env.BACKEND_URL}/hotel/listcity`,
+        `${process.env.REACT_APP_BACKEND_URL}/hotel/listcity`,
         {
           method: "GET",
           mode: "cors",
