@@ -26,14 +26,18 @@ app.use(
 
 app.use(bodyParser.json());
 //Config session
+app.set("trust proxy", true);
 app.use(
   session({
     secret: "my-secret",
     resave: false,
     saveUninitialized: false,
+    proxy: "true",
     cookie: {
       maxAge: 1000 * 60 * 60 * 24 * 30, // thời gian sống của cookie do session gửi trả client-side là 30 ngày
       httpOnly: true,
+      secure: true,
+      sameSite: "none",
     },
   })
 );
