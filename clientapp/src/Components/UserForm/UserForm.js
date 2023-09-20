@@ -60,7 +60,7 @@ const UserForm = () => {
       };
     }
     const response = await fetch(
-      `http://localhost:5000/user/access?mode=${mode}`,
+      `${process.env.backend_url}/user/access?mode=${mode}`,
       {
         method: "POST",
         mode: "cors",

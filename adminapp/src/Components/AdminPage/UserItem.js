@@ -6,7 +6,7 @@ const UserItem = (props) => {
   const [message, setMessage] = useState("");
   const userType = props.user.isAdmin ? "Admin" : "User";
   const postSetAdmin = async () => {
-    const response = await fetch(`http://localhost:5000/user/setadmin`, {
+    const response = await fetch(`${process.env.BACKEND_URL}/user/setadmin`, {
       method: "POST",
       mode: "cors",
       credentials: "include",

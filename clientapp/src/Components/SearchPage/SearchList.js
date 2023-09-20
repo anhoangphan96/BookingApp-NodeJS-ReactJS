@@ -12,7 +12,7 @@ const SearchList = function () {
   const [errorMessage, setErrorMessage] = useState("No Hotel found");
   const postSearchData = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/hotel/search`, {
+      const response = await fetch(`${process.env.backend_url}/hotel/search`, {
         method: "POST",
         mode: "cors",
         headers: { "Content-Type": "application/json" },

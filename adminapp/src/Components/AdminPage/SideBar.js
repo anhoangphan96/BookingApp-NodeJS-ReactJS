@@ -7,12 +7,15 @@ const SideBar = () => {
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
   const clickToLogout = async () => {
-    const response = await fetch(`http://localhost:5000/user/adminlogout`, {
-      method: "POST",
-      credentials: "include",
-      mode: "cors",
-      headers: { "Content-Type": "application/json" },
-    });
+    const response = await fetch(
+      `${process.env.BACKEND_URL}/user/adminlogout`,
+      {
+        method: "POST",
+        credentials: "include",
+        mode: "cors",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
     if (response.ok) {
       dispatch(loginActions.LOGOUT());
       navigate("/login");

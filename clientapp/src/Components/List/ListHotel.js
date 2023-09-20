@@ -10,12 +10,14 @@ const ListHotel = function (props) {
   const [listHotel, setListHotel] = useState([]);
   const getDataListHotel = async () => {
     try {
-      const response = await fetch("http://localhost:5000/hotel/listhotel", {
-        method: "GET",
-        mode: "cors",
-        credentials: "include",
-
-      });
+      const response = await fetch(
+        `${process.env.backend_url}/hotel/listhotel`,
+        {
+          method: "GET",
+          mode: "cors",
+          credentials: "include",
+        }
+      );
       const data = await response.json();
 
       setListHotel((prev) => {

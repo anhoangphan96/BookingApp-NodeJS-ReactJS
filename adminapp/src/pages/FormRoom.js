@@ -46,7 +46,7 @@ const FormRoom = () => {
   };
   const getDataOneRoom = async () => {
     const response = await fetch(
-      `http://localhost:5000/room/updateroom?id=${idRoom}`,
+      `${process.env.BACKEND_URL}/room/updateroom?id=${idRoom}`,
       {
         method: "GET",
         mode: "cors",
@@ -69,9 +69,9 @@ const FormRoom = () => {
 
   let urlToFetch;
   if (mode === "add") {
-    urlToFetch = `http://localhost:5000/room/addroom`;
+    urlToFetch = `${process.env.BACKEND_URL}/room/addroom`;
   } else if (mode === "update") {
-    urlToFetch = `http://localhost:5000/room/updateroom?id=${idRoom}`;
+    urlToFetch = `${process.env.BACKEND_URL}/room/updateroom?id=${idRoom}`;
   }
 
   const sendDataInputRoom = async () => {
@@ -107,7 +107,7 @@ const FormRoom = () => {
     }
   };
   const getListHotel = async () => {
-    const response = await fetch(`http://localhost:5000/hotel`, {
+    const response = await fetch(`${process.env.BACKEND_URL}/hotel`, {
       method: "GET",
       mode: "cors",
       credentials: "include",

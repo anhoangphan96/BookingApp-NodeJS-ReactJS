@@ -26,11 +26,14 @@ const ListCity = function (props) {
   ]);
   const getDataListCity = async function () {
     try {
-      const response = await fetch("http://localhost:5000/hotel/listcity", {
-        method: "GET",
-        mode: "cors",
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${process.env.BACKEND_URL}/hotel/listcity`,
+        {
+          method: "GET",
+          mode: "cors",
+          credentials: "include",
+        }
+      );
       const data = await response.json();
       //Set state mới từ data backend gửi lên cho listCity
       setListCity((prev) => {

@@ -14,7 +14,7 @@ const TransactionAdmin = () => {
   const getDataTransactionAdmin = async () => {
     //Nếu như ở dashboard sẽ gọi đến api rout transaction adminlast8 (lấy 8 giao dịch mới nhất) còn không thì sẽ lấy full giao dịch
     const response = await fetch(
-      `http://localhost:5000/transaction/transadmin${
+      `${process.env.BACKEND_URL}/transaction/transadmin${
         urlLocation === "/" ? "last8" : ""
       }`,
       {

@@ -11,7 +11,7 @@ const RoomItem = (props) => {
     navigate(`/room/formroom?mode=update&id=${props.room._id}`);
   };
   const postDeleteRoom = async () => {
-    const response = await fetch(`http://localhost:5000/room/deleteroom`, {
+    const response = await fetch(`${process.env.BACKEND_URL}/room/deleteroom`, {
       method: "POST",
       mode: "cors",
       credentials: "include",

@@ -54,7 +54,7 @@ const Navbar = (props) => {
     setnavbarArr(navbarArrChange);
   };
   const postLogout = async () => {
-    const response = await fetch(`http://localhost:5000/user/logout`, {
+    const response = await fetch(`${process.env.backend_url}/user/logout`, {
       method: "POST",
       mode: "cors",
       headers: { "Content-Type": "application/json" },

@@ -13,13 +13,16 @@ const HotelItem = (props) => {
     navigate(`/hotel/formhotel?mode=update&id=${props.hotel._id}`);
   };
   const postDeleteHotel = async () => {
-    const response = await fetch(`http://localhost:5000/hotel/deletehotel`, {
-      method: "POST",
-      mode: "cors",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ hotelId: props.hotel._id }),
-    });
+    const response = await fetch(
+      `${process.env.BACKEND_URL}/hotel/deletehotel`,
+      {
+        method: "POST",
+        mode: "cors",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ hotelId: props.hotel._id }),
+      }
+    );
     setshowDeleteBtn(false);
     const data = await response.json();
     setMessage(data.message);

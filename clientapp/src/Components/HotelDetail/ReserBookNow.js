@@ -26,7 +26,7 @@ const ReserBookNow = () => {
   const idHotel = params.id;
   const getRoomsAvailable = async (dateRange) => {
     const response = await fetch(
-      `http://localhost:5000/room/available?dateRange=${dateRange}&id=${idHotel}`,
+      `${process.env.BACKEND_URL}/room/available?dateRange=${dateRange}&id=${idHotel}`,
       {
         method: "GET",
         mode: "cors",
@@ -75,19 +75,22 @@ const ReserBookNow = () => {
 
   const reserveNowHandler = async (event) => {
     event.preventDefault();
-    const response = await fetch(`http://localhost:5000/transaction/reserve`, {
-      method: "POST",
-      mode: "cors",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        hotelId: idHotel,
-        roomList: roomsSelected,
-        totalPrice: totalPriceOneDay * dayBook,
-        date: dateFormatted,
-        payMethod: paymentMethod,
-      }),
-    });
+    const response = await fetch(
+      `${process.env.BACKEND_URL}/transaction/reserve`,
+      {
+        method: "POST",
+        mode: "cors",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          hotelId: idHotel,
+          roomList: roomsSelected,
+          totalPrice: totalPriceOneDay * dayBook,
+          date: dateFormatted,
+          payMethod: paymentMethod,
+        }),
+      }
+    );
     if (response.status === 400) {
       const error = await response.json();
       setErrorInput(error);

@@ -38,7 +38,7 @@ const ListHotelType = function (props) {
   const getDataListHotelType = async () => {
     try {
       const response = await fetch(
-        "http://localhost:5000/hotel/listhoteltype",
+        `${process.env.backend_url}/hotel/listhoteltype`,
         {
           method: "GET",
           mode: "cors",

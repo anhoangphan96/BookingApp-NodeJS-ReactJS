@@ -11,7 +11,7 @@ const User = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const getListUser = async () => {
-    const response = await fetch(`http://localhost:5000/user/listuser`, {
+    const response = await fetch(`${process.env.BACKEND_URL}/user/listuser`, {
       method: "GET",
       mode: "cors",
       credentials: "include",

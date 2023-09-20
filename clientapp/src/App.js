@@ -13,11 +13,14 @@ function App() {
   //Nhớ làm cái catch error
   const checkLogin = async () => {
     try {
-      const response = await fetch("http://localhost:5000/user/checklogin", {
-        method: "GET",
-        credentials: "include",
-        mode: "cors",
-      });
+      const response = await fetch(
+        `${process.env.BACKEND_URL}/user/checklogin`,
+        {
+          method: "GET",
+          credentials: "include",
+          mode: "cors",
+        }
+      );
       const data = await response.json();
       console.log(data);
       if (data.isLoggedIn) {

@@ -11,11 +11,14 @@ const TransactionData = () => {
   const [dataTransaction, setdataTransaction] = useState([]);
   const getTransactionData = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/transaction/data`, {
-        method: "GET",
-        mode: "cors",
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${process.env.backend_url}/transaction/data`,
+        {
+          method: "GET",
+          mode: "cors",
+          credentials: "include",
+        }
+      );
       if (response.status === 401) {
         const errorMessage = await response.json();
         dispatch(loginActions.LOGOUT());

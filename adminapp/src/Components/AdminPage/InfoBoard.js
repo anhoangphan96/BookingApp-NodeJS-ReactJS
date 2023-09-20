@@ -13,7 +13,7 @@ const InfoBoard = () => {
   const [earning, setEarning] = useState(0);
   const [balance, setBalance] = useState(0);
   const getListUser = async () => {
-    const response = await fetch(`http://localhost:5000/user/listuser`, {
+    const response = await fetch(`${process.env.BACKEND_URL}/user/listuser`, {
       method: "GET",
       mode: "cors",
       credentials: "include",
@@ -25,7 +25,7 @@ const InfoBoard = () => {
   const getDataTransactionAdmin = async () => {
     //Nếu như ở dashboard sẽ gọi đến api rout transaction adminlast8 (lấy 8 giao dịch mới nhất) còn không thì sẽ lấy full giao dịch
     const response = await fetch(
-      `http://localhost:5000/transaction/transadmin`,
+      `${process.env.BACKEND_URL}/transaction/transadmin`,
       {
         method: "GET",
         mode: "cors",
